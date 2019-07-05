@@ -21,17 +21,15 @@
 
 				<form method="post" action="login.php">
 					<?php echo display_error(); ?>
-					<div class="input-group">
-						<label>Pseudo</label>
-						<input type="text" name="username">
+					<div class="input_login">
+						<label>IDENTIFIANT</label>
+						<input class="input_log" type="text" name="username">
 					</div>
-					<div class="input-group">
-						<label>Mot de passe</label>
-						<input type="password" name="password">
+					<div class="input_login">
+						<label>MOT DE PASSE</label>
+						<input class="input_log" type="password" name="password">
 					</div>
-					<div class="input-group">
-						<button type="submit" class="btn" name="login_btn">Connexion</button>
-					</div>
+						<button type="submit" class="btn" name="login_btn">CONNEXION</button>
 				</form>
 			</div>
 		</div>

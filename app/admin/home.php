@@ -66,11 +66,24 @@ if (isset($_GET['logout'])) {
         <div class="container">
             <div class="row">
                 <div class="infos_connec">
+
                     <?php if (isset($_SESSION['user'])) : ?>
                         <?php echo $_SESSION['user']['username']; ?>
                         (<?php echo ucfirst($_SESSION['user']['user_type']); ?>)
-                        <a href="home.php?logout='1'">logout</a>
-                        &nbsp; <a href="create_user.php"> + add user</a>
+
+                        <div class="dropdown inline-block relative">
+                            <button class="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center">
+                                <span class="mr-1">Dropdown</span>
+
+                                <i class="fas fa-chevron-down"></i>
+
+
+                                <ul class="dropdown-menu absolute hidden text-gray-700 pt-1">
+
+                                    <li class="logout"> <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="home.php?logout='1'">logout</a></li>
+                                    <li class="logout"> <a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="create_user.php"> + add user</a></li>
+                                </ul>
+                        </div>
                     <?php endif ?>
                 </div>
             </div>

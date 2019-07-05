@@ -12,6 +12,8 @@ $errors   = array();
 $dateEvent = "";
 $lieuMatch = "";
 $dispoEvent = "";
+// $LastUsers = NULL;
+// $LastSeason = NULL;
 
 // call the register() function if register_btn is clicked
 if (isset($_POST['register_btn'])) {
@@ -102,17 +104,27 @@ function register()
 function createSeason()
 {
 
-    global $db, $errors, $season;
+    global $db, $errors, $season, $LastSeason, $LastUsers;
     $season =  $_POST['date_saison'];
-
+    // $LastSeason = $_POST['id_saison'];
+    // $LastUsers = $_POST['id_users'];
     if (empty($season)) {
         array_push($errors, "Une saisie est requise");
     }
 
     if (count($errors) == 0) {
-
         $sql = "INSERT INTO saison (date_saison) 
-		VALUES('$season')";
+        VALUES('$season')";
+        
+
+        // $LastSeason ="SELECT date_saison FROM saison";
+
+        // $sqlSaison ="INSERT INTO users_saisons (id_users, id_saison)
+        //                 VALUES('$LastUsers','$LastSeason')";
+        // $sthSaison = $db->prepare($sqlSaison);
+        // $sthSaison->execute();
+        
+        
         $sth = $db->prepare($sql);
         $sth->execute();
         $_SESSION['success']  = "New user successfully created!!";
@@ -223,6 +235,7 @@ function add_date()
     $dateEvent = $_POST['date_events'];
     $lieuMatch = $_POST['lieu_events'];
     $dispoEvent = $_POST['dispo_events'];
+    
 
     if (empty($dateEvent)) {
         array_push($errors, "Date non défini");
@@ -240,7 +253,8 @@ function add_date()
     if(count($errors) == 0) {
     // Requete insert mon formulaire dans la table planning
     $sql = "INSERT INTO planning (events, lieu, places_dispo) 
-VALUES('$dateEvent', '$lieuMatch', '$dispoEvent')";
+            VALUES('$dateEvent', '$lieuMatch', '$dispoEvent')";
+
     $sth = $db->prepare($sql);
     $sth->bindParam(':events', $dateEvent, PDO::PARAM_STR);
     $sth->bindParam(':lieu', $lieuMatch, PDO::PARAM_STR);

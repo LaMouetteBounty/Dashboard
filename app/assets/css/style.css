@@ -18,6 +18,16 @@
   src: url("../font/lato/Lato-Italic.ttf");
 }
 
+@font-face {
+  font-family: "anton";
+  src: url("../font/anton/anton_regular.ttf");
+}
+
+@font-face {
+  font-family: "oswald";
+  src: url("../font/oswald/oswald.ttf");
+}
+
 .body .main {
   padding: 0;
   display: -webkit-box;
@@ -97,6 +107,85 @@
   background-color: #e6e7e8;
   height: 10vh;
   width: 100%;
+  font-family: "lato bold";
+  font-size: .8em;
+}
+
+.body .main .infos_connec .dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.bg_login {
+  background-image: url("../img/background/basketball-1081882.jpg");
+  background-size: cover;
+  height: 100vh;
+}
+
+.bg_login .container {
+  padding: 10rem 0 0 0;
+  width: 400px;
+}
+
+.bg_login .container .main_login {
+  background-color: rgba(255, 255, 255, 0.85);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.bg_login .container .main_login h2 {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 2.5em;
+  margin-bottom: 1rem;
+  font-family: "anton";
+}
+
+.bg_login .container .main_login .input_login {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 1rem 4rem 1rem 4rem;
+}
+
+.bg_login .container .main_login .input_login .input_log {
+  background-color: rgba(255, 255, 255, 0.5);
+  height: 40px;
+  border: 1px solid #cfcfcf;
+  padding: 10px;
+  font-family: "lato";
+  color: #404041;
+}
+
+.bg_login .container .main_login .input_login label {
+  color: #404041;
+  font-family: "oswald";
+  font-size: 1.2em;
+}
+
+.bg_login .container .main_login .btn {
+  margin-top: 2rem;
+  color: white;
+  font-family: "oswald";
+  font-size: 1.3em;
+  text-align: center;
+  width: 100%;
+  background-color: #404041;
+  text-align: center;
+}
+
+.bg_login .container .main_login .btn:hover {
+  background-color: gray;
+  -webkit-transition-duration: .5s;
+          transition-duration: .5s;
 }
 
 .body .main_saison {
@@ -106,8 +195,9 @@
 .body .main_notifs h3 {
   margin-top: 1rem;
   text-align: center;
-  margin-bottom: 2rem;
-  font-family: "lato bold";
+  font-size: 2.5em;
+  margin-bottom: 1rem;
+  font-family: "anton";
 }
 
 .body .main_notifs .info_error {
