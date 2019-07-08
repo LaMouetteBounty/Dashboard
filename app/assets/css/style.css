@@ -108,11 +108,77 @@
   height: 10vh;
   width: 100%;
   font-family: "lato bold";
-  font-size: .8em;
+  font-size: 0.8em;
 }
 
 .body .main .infos_connec .dropdown:hover .dropdown-menu {
   display: block;
+}
+
+.body .main .contains_top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  margin: 2rem 2rem 2rem 2rem;
+}
+
+.body .main .contains_top .nb_inscrit {
+  font-family: "lato bold";
+  color: #404041;
+  font-size: 1.2em;
+  text-align: center;
+  background-color: white;
+  -webkit-box-shadow: 5px 5px 15px 0px #cfcfcf;
+          box-shadow: 5px 5px 15px 0px #cfcfcf;
+  padding: 1rem;
+}
+
+.body .main .contains_top .nb_inscrit h4 {
+  font-family: "lato bold";
+  color: #f05a28;
+  font-size: 1.1em;
+}
+
+.body .main .contains_top .last_match {
+  font-family: "lato bold";
+  color: #404041;
+  font-size: 1.2em;
+  text-align: center;
+  background-color: white;
+  -webkit-box-shadow: 5px 5px 15px 0px #cfcfcf;
+          box-shadow: 5px 5px 15px 0px #cfcfcf;
+  padding: 1rem;
+}
+
+.body .main .contains_top .last_match h4 {
+  font-family: "lato bold";
+  color: #f05a28;
+  font-size: 1.1em;
+}
+
+.body .main .contains_top .last_match p {
+  margin: 0;
+}
+
+.body .main .contains_top .top_un {
+  font-family: "lato bold";
+  color: #404041;
+  font-size: 1.2em;
+  text-align: center;
+  background-color: white;
+  -webkit-box-shadow: 5px 5px 15px 0px #cfcfcf;
+          box-shadow: 5px 5px 15px 0px #cfcfcf;
+  padding: 1rem;
+}
+
+.body .main .contains_top .top_un h4 {
+  font-family: "lato bold";
+  color: #f05a28;
+  font-size: 1.1em;
 }
 
 .bg_login {
@@ -184,12 +250,93 @@
 
 .bg_login .container .main_login .btn:hover {
   background-color: gray;
-  -webkit-transition-duration: .5s;
-          transition-duration: .5s;
+  -webkit-transition-duration: 0.5s;
+          transition-duration: 0.5s;
 }
 
-.body .main_saison {
-  background-color: red;
+.body .titre_saison h3 {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 2.5em;
+  margin-bottom: 1rem;
+  font-family: "anton";
+}
+
+.body .titre_saison .info_error {
+  text-align: center;
+  font-family: "lato bold";
+  color: #f05a28;
+}
+
+.body .form_saison {
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 2rem;
+  padding: 0 2rem 2rem 2rem;
+  background-color: white;
+  -webkit-box-shadow: 5px 5px 15px 0px #cfcfcf;
+          box-shadow: 5px 5px 15px 0px #cfcfcf;
+}
+
+.body .form_saison .creation_saison {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.body .form_saison .creation_saison label {
+  margin-top: 2rem;
+  font-family: "lato bold";
+  color: #f05a28;
+}
+
+.body .form_saison .creation_saison .btn {
+  margin-top: 2rem;
+  font-family: "lato bold";
+  background-color: #f05a28;
+  color: white;
+  width: 100%;
+}
+
+.body .gestion_saison {
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 2rem;
+  padding: 0 2rem 2rem 2rem;
+  background-color: white;
+  -webkit-box-shadow: 5px 5px 15px 0px #cfcfcf;
+          box-shadow: 5px 5px 15px 0px #cfcfcf;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.body .gestion_saison label {
+  margin-top: 2rem;
+  font-family: "lato bold";
+  color: #f05a28;
+}
+
+.body .gestion_saison .btn {
+  margin-top: 2rem;
+  font-family: "lato bold";
+  background-color: #f05a28;
+  color: white;
+  width: 100%;
 }
 
 .body .main_notifs h3 {
@@ -264,5 +411,111 @@
 .body .main_notifs .add_events .dernier_match p span {
   font-family: "lato bold";
   color: #f05a28;
+}
+
+.body_createUser {
+  margin: 0;
+  padding: 0;
+}
+
+.body_createUser .bg_createUser {
+  background-image: url("../img/background/basketball-1081882.jpg");
+  background-size: cover;
+}
+
+.body_createUser .bg_createUser .container {
+  padding: 10rem 7rem 10rem 7rem;
+}
+
+.body_createUser .bg_createUser .container .main_createUser {
+  background-color: rgba(255, 255, 255, 0.85);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.body_createUser .bg_createUser .container .main_createUser h2 {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 2.5em;
+  margin-bottom: 1rem;
+  font-family: "anton";
+}
+
+.body_createUser .bg_createUser .container .main_createUser .input-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 1rem 4rem 1rem 4rem;
+}
+
+.body_createUser .bg_createUser .container .main_createUser .input-group input {
+  background-color: rgba(255, 255, 255, 0.5);
+  height: 40px;
+  border: 1px solid #cfcfcf;
+  padding: 10px;
+  font-family: "lato";
+  font-size: 1.3em;
+  color: #404041;
+}
+
+.body_createUser .bg_createUser .container .main_createUser .input-group input:focus {
+  border: #f05a28 solid 1px;
+}
+
+.body_createUser .bg_createUser .container .main_createUser .input-group label {
+  color: #404041;
+  font-family: "oswald";
+  font-size: 1.2em;
+}
+
+.body_createUser .bg_createUser .container .main_createUser .selecteur {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.body_createUser .bg_createUser .container .main_createUser .selecteur select {
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.5);
+  color: #404041;
+  font-family: "oswald";
+  font-size: 1.3em;
+  width: 170%;
+}
+
+.body_createUser .bg_createUser .container .main_createUser .selecteur select:focus {
+  border: #f05a28 solid 1px;
+}
+
+.body_createUser .bg_createUser .container .main_createUser .btn {
+  margin: 2rem 0 0 0;
+  color: white;
+  font-family: "oswald";
+  font-size: 1.3em;
+  text-align: center;
+  width: 100%;
+  background-color: #404041;
+  text-align: center;
+  border: none;
+  height: 50px;
+}
+
+.body_createUser .bg_createUser .container .main_createUser .btn:hover {
+  background-color: gray;
+  -webkit-transition-duration: 0.5s;
+          transition-duration: 0.5s;
 }
 /*# sourceMappingURL=style.css.map */

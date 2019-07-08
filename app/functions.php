@@ -26,10 +26,11 @@ if (isset($_POST['season_btn'])) {
 
 if (isset($_POST['date_btn'])) {
     add_date();
-    
-    
 }
 
+if (isset($_POST['delete_btn'])) {
+    delete();
+}
 // REGISTER USER
 function register()
 {
@@ -38,6 +39,7 @@ function register()
 
     // receive all input values from the form. Call the e() function
     // defined below to escape form values
+
     $username    =  $_POST['username'];
     $email       =  $_POST['email'];
     $password_1  =  $_POST['password_1'];
@@ -104,10 +106,9 @@ function register()
 function createSeason()
 {
 
-    global $db, $errors, $season, $LastSeason, $LastUsers;
+    global $db, $errors, $season, $users;
     $season =  $_POST['date_saison'];
-    // $LastSeason = $_POST['id_saison'];
-    // $LastUsers = $_POST['id_users'];
+
     if (empty($season)) {
         array_push($errors, "Une saisie est requise");
     }
@@ -115,20 +116,31 @@ function createSeason()
     if (count($errors) == 0) {
         $sql = "INSERT INTO saison (date_saison) 
         VALUES('$season')";
-        
 
-        // $LastSeason ="SELECT date_saison FROM saison";
-
-        // $sqlSaison ="INSERT INTO users_saisons (id_users, id_saison)
-        //                 VALUES('$LastUsers','$LastSeason')";
-        // $sthSaison = $db->prepare($sqlSaison);
-        // $sthSaison->execute();
-        
-        
         $sth = $db->prepare($sql);
         $sth->execute();
         $_SESSION['success']  = "New user successfully created!!";
         header('location: saisons.php');
+    }
+    // $recupSaisonFor = "SELECT id FROM saison";
+    // $recupSaisonFor = $db->prepare($recupSaisonFor);
+    // $recupSaisonFor->execute();
+    // $result = $recupSaisonFor->fetchAll(PDO::FETCH_ASSOC);
+
+    $recupUserFor = "SELECT id FROM users";
+    $recupUserFor = $db->prepare($recupUserFor);
+    $recupUserFor->execute();
+    $result = $recupUserFor->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+    // output data of each row
+    foreach ($result as $users => $recupUserFor) {
+        $requete = "INSERT INTO users_saison (id_user, id_saison) VALUES(:id_user, :id_saison)";
+        $sth_userFor = $db->prepare($requete);
+        $sth_userFor->bindParam(':id_saison', $season, PDO::PARAM_STR);
+        $sth_userFor->bindParam(':id_user', $recupUserFor['id'], PDO::PARAM_INT);
+        $sth_userFor->execute();
     }
 }
 
@@ -231,11 +243,11 @@ function add_date()
 {
 
     // ajout de la date de l'evenement
-    global $db, $errors;
+    global $db, $errors, $result, $users;
     $dateEvent = $_POST['date_events'];
     $lieuMatch = $_POST['lieu_events'];
     $dispoEvent = $_POST['dispo_events'];
-    
+    $noReponse = "";
 
     if (empty($dateEvent)) {
         array_push($errors, "Date non défini");
@@ -246,55 +258,54 @@ function add_date()
     if (empty($dispoEvent)) {
         array_push($errors, "Nombre de joueurs non défini");
     }
-    // $sql = "INSERT INTO saison (date_saison) 
-    // VALUES('$season')";
-    // $sth = $db->prepare($sql);
-    // $sth->execute();
-    if(count($errors) == 0) {
-    // Requete insert mon formulaire dans la table planning
-    $sql = "INSERT INTO planning (events, lieu, places_dispo) 
+
+    if (count($errors) == 0) {
+        // Requete insert mon formulaire dans la table planning
+        $sql = "INSERT INTO planning (events, lieu, places_dispo) 
             VALUES('$dateEvent', '$lieuMatch', '$dispoEvent')";
 
-    $sth = $db->prepare($sql);
-    $sth->bindParam(':events', $dateEvent, PDO::PARAM_STR);
-    $sth->bindParam(':lieu', $lieuMatch, PDO::PARAM_STR);
-    $sth->bindParam(':places_dispo', $dispoEvent, PDO::PARAM_STR);
-    $sth->execute();
-    $_SESSION['success']  = "New user successfully created!!";
-    header('location: notifs.php');
+        $sth = $db->prepare($sql);
+        $sth->bindParam(':events', $dateEvent, PDO::PARAM_STR);
+        $sth->bindParam(':lieu', $lieuMatch, PDO::PARAM_STR);
+        $sth->bindParam(':places_dispo', $dispoEvent, PDO::PARAM_STR);
+        $sth->execute();
+        $_SESSION['success']  = "New user successfully created!!";
+        header('location: notifs.php');
     }
 
-    // je vais sortir mes date d'evenement de la table planning
-    // $stmt = $db->prepare("SELECT * FROM planning");
-    // if ($stmt->execute(array())) {
-    //     while ($row = $stmt->fetch()) {
-    //         echo $row[0] . '<br>';
-    //     }
-    // }
+    $recupUser = "SELECT id FROM users";
+    $recupUser = $db->prepare($recupUser);
+    $recupUser->execute();
+    $result = $recupUser->fetchAll(PDO::FETCH_ASSOC);
 
-    // Je vais chercher l'id de mes parent inscrit
-    // $stmt = $db->query("SELECT * FROM Planning");
-    // while ($row = $stmt->fetch()) {
-    // echo $row['events']."<br />\n";
-    // }
-
-    // $stmt = $pdo->query("SELECT * FROM Planning");
-    // $result = $db->query($id_user);
-
-    // affichage d'un id
-    // $test = $result->fetch_assoc();
-    // echo $test["id"] . "<br>";
-
-    // $verifdate = $_POST['date_events'];
-    // var_dump($_POST['date_events']);
-
-    // $requery = "INSERT INTO Reponse VALUES(" . $verifdate . ")";
-
-    // mysqli_query($db, $requery);
+    foreach ($result as $users => $recupUser) {
+        $requete = "INSERT INTO response_parent (jour_event, id_user, reponse) VALUES(:jour_event, :id_user, :reponse)";
+        $sth_user = $db->prepare($requete);
+        $sth_user->bindParam(':jour_event', $dateEvent, PDO::PARAM_STR);
+        $sth_user->bindParam(':id_user', $recupUser['id'], PDO::PARAM_INT);
+        $sth_user->bindParam(':reponse', $noReponse, PDO::PARAM_STR);
+        $sth_user->execute();
+    }
+}
 
 
-    // while ($row = $result->fetch_assoc()) {
-    // echo $row["id"] ."<br>";
-    // }
 
+
+function delete()
+{
+
+    global $db, $season;
+    $season =  $_POST['date_saison'];
+// $deleteSaison = isset($_POST['date_saison']) ? $_POST['date_saison'] : false;
+    // if (count($errors) == 0) {
+
+// if($deleteSaison){
+
+        $delete = "DELETE FROM saison WHERE (date_saison = :date_saison)";
+
+        $sthDelete = $db->prepare($delete);
+        $sthDelete->execute();
+        
+        header('location: saisons.php');
+    //  }
 }

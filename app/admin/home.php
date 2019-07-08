@@ -63,7 +63,7 @@ if (isset($_GET['logout'])) {
                 </div>
             </div>
         </div>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="infos_connec">
 
@@ -71,26 +71,60 @@ if (isset($_GET['logout'])) {
                         <?php echo $_SESSION['user']['username']; ?>
                         (<?php echo ucfirst($_SESSION['user']['user_type']); ?>)
 
-                        <div class="dropdown inline-block relative">
-                            <button class="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center">
-                                <span class="mr-1">Dropdown</span>
-
-                                <i class="fas fa-chevron-down"></i>
-
-
-                                <ul class="dropdown-menu absolute hidden text-gray-700 pt-1">
-
-                                    <li class="logout"> <a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="home.php?logout='1'">logout</a></li>
-                                    <li class="logout"> <a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="create_user.php"> + add user</a></li>
-                                </ul>
+                        <div class="dropdown inline-block">
+                            <img src="../assets/img/icons/arrow.png" width="20px">
+                            <ul class="dropdown-menu absolute hidden text-gray-700 pt-1">
+                                <li class="logout"> <a href="home.php?logout='1'">logout</a></li>
+                                <li class="logout"> <a href="create_user.php"> + add user</a></li>
+                            </ul>
                         </div>
                     <?php endif ?>
                 </div>
             </div>
             <!-- CONTENUE -->
+            <div class="container">
             <div class="row">
+                <!-- 3 CONTAINS TOP -->
+                <div class="contains_top">
+                    <!-- NOMBRE D'INSCRIT SUR LA PLATEFORME -->
+                    <div class="nb_inscrit col-6">
+                        <h4> NOMBRE D'UTILISATEUR</h4>
+                        <?php
+                        $utilisateur = "";
+                        $connect = $db->prepare("SELECT COUNT(*) FROM users");
+                        if ($connect->execute(array())) {
+                            $utilisateur = $connect->fetch();
+                            echo $utilisateur[0];
+                        
+                        }
+                        
+                        ?>
+                    </div>
+                    <!-- DATE DU DERNIER MATCH -->
+                    <div class="last_match offset-1 col-6">
+                        <h4> Prochain match </h4>
+                        <?php
+                        $infoMatch = "";
+                        $connectMatch = $db->prepare("SELECT * FROM planning
+                        ORDER BY events DESC");
+                        if ($connectMatch->execute(array())) {
+                            $infoMatch = $connectMatch->fetch();
+                            echo $infoMatch[1];
+                            ?> 
+                            <span> à </span>
+                            <?php
+                            echo $infoMatch[2];
+                        }
+                        ?>
+                    </div>
+                    <!-- PARENT AYANT LE PLUS TRANSPORTE DE JOUEURS -->
+                    <div class="top_un offset-1 col-6">
+                        <h4> Top 1 </h4>
 
 
+
+                    </div>
+                </div>
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
