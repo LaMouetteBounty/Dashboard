@@ -21,7 +21,7 @@ if (isset($_GET['logout'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Admin - saisons</title>
+    <title>BkC - Nouveau match</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
 </head>
@@ -33,7 +33,7 @@ if (isset($_GET['logout'])) {
             <div class="container">
                 <div class="row">
                     <div class="profil">
-                        <img src="../assets/maquettes/img/photo_profil.png" width="150px">
+                        <img src="../assets/maquettes/bkc_dashboard.png" width="150px">
                         <?php if (isset($_SESSION['user'])) : ?>
                             <div class="type_user">(<?php echo ucfirst($_SESSION['user']['user_type']); ?>)</div>
                             <?php echo $_SESSION['user']['username']; ?>
@@ -67,13 +67,19 @@ if (isset($_GET['logout'])) {
         </div>
         <div class="container">
             <div class="row">
-                <div class="infos_connec">
+            <div class="infos_connec">
                     <?php if (isset($_SESSION['user'])) : ?>
                         <?php echo $_SESSION['user']['username']; ?>
                         (<?php echo ucfirst($_SESSION['user']['user_type']); ?>)
-                        <a href="home.php?logout='1'">logout</a>
-                        &nbsp; <a href="create_user.php"> + add user</a>
                     <?php endif ?>
+                    <img src="../assets/maquettes/bkc_dashboard.png" width="40px">
+                    <div class="dropdown inline-block">
+                        <img src="../assets/img/icons/arrow.png" width="20px">
+                        <ul class="dropdown-menu absolute hidden">
+                            <li class="logout"> <a href="create_user.php">INSCRIPTION</a></li>
+                            <li class="logout"> <a href="home.php?logout='1'">DÉCONNEXION</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 

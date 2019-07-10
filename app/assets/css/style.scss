@@ -27,6 +27,48 @@
   font-family: "oswald";
   src: url("../font/oswald/oswald.ttf");
 }
+
+// ##########################################################
+// ##########################################################
+//                        NAV TOP
+// ##########################################################
+// ##########################################################
+.infos_connec {
+  background-color: #e6e7e8;
+  height: 10vh;
+  width: 100%;
+  font-family: "lato bold";
+  font-size: 1em;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 3rem 0 0;
+  .dropdown:hover .dropdown-menu {
+    background-color: rgba($color: white, $alpha: 0.5);
+    border: #cfcfcf solid 1px;
+    padding: 0.5rem 0 0.5rem 0;
+    margin: 0;
+    font-family: "lato bold";
+    display: block;
+    min-width: 8rem;
+    text-align: center;
+    top: 100%;
+    left: -50px;
+    a {
+      color: #404041;
+      font-size: 0.8em;
+      text-decoration: none;
+      list-style: none;
+    }
+    a:hover {
+      color: #f05a28;
+    }
+  }
+  img {
+    margin: 0 0.2rem 0 0.5rem;
+  }
+}
 // ##########################################################
 // ##########################################################
 //                        HOME.PHP
@@ -37,7 +79,6 @@
     padding: 0;
     display: flex;
     flex-direction: row;
-    // background-color: #cccccb;
     .side_bar {
       background-image: url("../maquettes/img/bg_sidebar.jpg");
       width: 25%;
@@ -82,16 +123,7 @@
         }
       }
     }
-    .infos_connec {
-      background-color: #e6e7e8;
-      height: 10vh;
-      width: 100%;
-      font-family: "lato bold";
-      font-size: 0.8em;
-      .dropdown:hover .dropdown-menu {
-        display: block;
-      }
-    }
+
     .contains_top {
       display: flex;
       flex-direction: row;
@@ -409,7 +441,6 @@
           select:focus {
             border: #f05a28 solid 1px;
           }
-
         }
         .btn {
           margin: 2rem 0 0 0;
@@ -428,6 +459,162 @@
           transition-duration: 0.5s;
         }
       }
+    }
+  }
+}
+// ##########################################################
+// ##########################################################
+//                        EVENTS.PHP
+// ##########################################################
+// ##########################################################
+
+.body {
+  .titre_events {
+    h3 {
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 2.5em;
+      margin-bottom: 1rem;
+      font-family: "anton";
+    }
+    .info_error {
+      text-align: center;
+      font-family: "lato bold";
+      color: #f05a28;
+    }
+  }
+  #calendar-container {
+    overflow-x: scroll;
+    background-color: #333;
+    color: white;
+    width: 90vw;
+    min-height: 300px;
+    max-width: 800px;
+    display: block;
+    margin: 2vh auto;
+    // border-radius: 10px;
+    padding: 5px 10px;
+    font-family: "lato bold";
+    #calendar-title {
+      width: 90%;
+      margin: 5vh auto;
+      text-align: center;
+      font-family: "lato bold";
+    }
+
+    #calendar-table {
+      width: auto;
+      margin: auto;
+    }
+
+    #calendar-table td,
+    #calendar-table th {
+      padding: 15px 20px;
+      border: none;
+      text-align: center;
+      border-radius: 10px;
+    }
+
+    .today-cell {
+      background-color: #888;
+    }
+
+    #date-text {
+      text-align: center;
+    }
+
+    .btn {
+      display: inline-block;
+      width: 0px;
+      height: 0px;
+      border: 10px solid #333;
+      margin: 1px 10px;
+    }
+
+    .btn.left {
+      border-right: 10px solid white;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .btn.right {
+      border-left: 10px solid white;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .btn.left:hover {
+      border-right: 10px solid #ccc;
+      cursor: pointer;
+    }
+
+    .btn.right:hover {
+      border-left: 10px solid #ccc;
+      cursor: pointer;
+    }
+
+    #calendar-table td:hover {
+      background-color: #ddd;
+      cursor: pointer;
+      color: black;
+    }
+  }
+}
+
+
+// ##########################################################
+// ##########################################################
+//                        USERS_NOTIFS.PHP
+// ##########################################################
+// ##########################################################
+
+.formulaire_notif_user {
+align-items: center;
+  .input_notifs {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    h4 {
+      margin-top: 1rem;
+      font-size: 1.2em;
+      font-family: "lato bold";
+      margin-bottom: 1rem;
+      color: #404041;
+    }
+    label {
+      // margin-top: .1rem;
+      font-family: "lato bold";
+      color: #f05a28;
+    }
+    p {
+      margin-bottom: 1rem;
+      font-family: "lato";
+      color: #404041;
+    }
+  }
+  .btn {
+    margin-top: 1rem;
+    font-family: "lato bold";
+    background-color: #f05a28;
+    color: white;
+    width: 100%;
+  }
+}
+.prochain_match {
+  // margin-top: auto;
+  // margin-bottom: auto;
+  color: #404041;
+  h4 {
+    margin-top: 1rem;
+    font-size: 1.2em;
+    font-family: "lato bold";
+    margin-bottom: 1rem;
+  }
+  p {
+    font-family: "lato";
+    span {
+      font-family: "lato bold";
+      color: #f05a28;
     }
   }
 }

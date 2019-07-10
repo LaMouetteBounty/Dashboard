@@ -3,7 +3,7 @@
 <html>
 
 <head>
-	<title>Registration system PHP and MySQL - Create user</title>
+	<title>Bkc - Créer un compte</title>
 	<link rel="stylesheet" type="text/css" href="../assets/css/style.css">
 </head>
 

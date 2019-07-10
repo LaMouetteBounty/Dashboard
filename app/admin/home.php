@@ -33,7 +33,7 @@ if (isset($_GET['logout'])) {
             <div class="container">
                 <div class="row">
                     <div class="profil">
-                        <img src="../assets/maquettes/img/photo_profil.png" width="150px">
+                        <img src="../assets/maquettes/bkc_dashboard.png" width="150px">
                         <?php if (isset($_SESSION['user'])) : ?>
                             <div class="type_user">(<?php echo ucfirst($_SESSION['user']['user_type']); ?>)</div>
                             <?php echo $_SESSION['user']['username']; ?>
@@ -66,71 +66,69 @@ if (isset($_GET['logout'])) {
         <div class="container-fluid">
             <div class="row">
                 <div class="infos_connec">
-
                     <?php if (isset($_SESSION['user'])) : ?>
                         <?php echo $_SESSION['user']['username']; ?>
                         (<?php echo ucfirst($_SESSION['user']['user_type']); ?>)
-
-                        <div class="dropdown inline-block">
-                            <img src="../assets/img/icons/arrow.png" width="20px">
-                            <ul class="dropdown-menu absolute hidden text-gray-700 pt-1">
-                                <li class="logout"> <a href="home.php?logout='1'">logout</a></li>
-                                <li class="logout"> <a href="create_user.php"> + add user</a></li>
-                            </ul>
-                        </div>
                     <?php endif ?>
+                    <img src="../assets/maquettes/bkc_dashboard.png" width="40px">
+                    <div class="dropdown inline-block">
+                        <img src="../assets/img/icons/arrow.png" width="20px">
+                        <ul class="dropdown-menu absolute hidden">
+                            <li class="logout"> <a href="create_user.php">INSCRIPTION</a></li>
+                            <li class="logout"> <a href="home.php?logout='1'">DÉCONNEXION</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <!-- CONTENUE -->
             <div class="container">
-            <div class="row">
-                <!-- 3 CONTAINS TOP -->
-                <div class="contains_top">
-                    <!-- NOMBRE D'INSCRIT SUR LA PLATEFORME -->
-                    <div class="nb_inscrit col-6">
-                        <h4> NOMBRE D'UTILISATEUR</h4>
-                        <?php
-                        $utilisateur = "";
-                        $connect = $db->prepare("SELECT COUNT(*) FROM users");
-                        if ($connect->execute(array())) {
-                            $utilisateur = $connect->fetch();
-                            echo $utilisateur[0];
-                        
-                        }
-                        
-                        ?>
-                    </div>
-                    <!-- DATE DU DERNIER MATCH -->
-                    <div class="last_match offset-1 col-6">
-                        <h4> Prochain match </h4>
-                        <?php
-                        $infoMatch = "";
-                        $connectMatch = $db->prepare("SELECT * FROM planning
-                        ORDER BY events DESC");
-                        if ($connectMatch->execute(array())) {
-                            $infoMatch = $connectMatch->fetch();
-                            echo $infoMatch[1];
-                            ?> 
-                            <span> à </span>
+                <div class="row">
+                    <!-- 3 CONTAINS TOP -->
+                    <div class="contains_top">
+                        <!-- NOMBRE D'INSCRIT SUR LA PLATEFORME -->
+                        <div class="nb_inscrit col-6">
+                            <h4> NOMBRE D'UTILISATEUR</h4>
                             <?php
-                            echo $infoMatch[2];
-                        }
-                        ?>
-                    </div>
-                    <!-- PARENT AYANT LE PLUS TRANSPORTE DE JOUEURS -->
-                    <div class="top_un offset-1 col-6">
-                        <h4> Top 1 </h4>
+                            $utilisateur = "";
+                            $connect = $db->prepare("SELECT COUNT(*) FROM users");
+                            if ($connect->execute(array())) {
+                                $utilisateur = $connect->fetch();
+                                echo $utilisateur[0];
+                            }
+
+                            ?>
+                        </div>
+                        <!-- DATE DU DERNIER MATCH -->
+                        <div class="last_match offset-1 col-6">
+                            <h4> Prochain match </h4>
+                            <?php
+                            $infoMatch = "";
+                            $connectMatch = $db->prepare("SELECT * FROM planning
+                        ORDER BY events DESC");
+                            if ($connectMatch->execute(array())) {
+                                $infoMatch = $connectMatch->fetch();
+                                echo $infoMatch[1];
+                                ?>
+                                <span> à </span>
+                                <?php
+                                echo $infoMatch[2];
+                            }
+                            ?>
+                        </div>
+                        <!-- PARENT AYANT LE PLUS TRANSPORTE DE JOUEURS -->
+                        <div class="top_un offset-1 col-6">
+                            <h4> Top 1 </h4>
 
 
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </body>
 
 </html>

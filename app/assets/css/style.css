@@ -28,6 +28,56 @@
   src: url("../font/oswald/oswald.ttf");
 }
 
+.infos_connec {
+  background-color: #e6e7e8;
+  height: 10vh;
+  width: 100%;
+  font-family: "lato bold";
+  font-size: 1em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0 3rem 0 0;
+}
+
+.infos_connec .dropdown:hover .dropdown-menu {
+  background-color: rgba(255, 255, 255, 0.5);
+  border: #cfcfcf solid 1px;
+  padding: 0.5rem 0 0.5rem 0;
+  margin: 0;
+  font-family: "lato bold";
+  display: block;
+  min-width: 8rem;
+  text-align: center;
+  top: 100%;
+  left: -50px;
+}
+
+.infos_connec .dropdown:hover .dropdown-menu a {
+  color: #404041;
+  font-size: 0.8em;
+  text-decoration: none;
+  list-style: none;
+}
+
+.infos_connec .dropdown:hover .dropdown-menu a:hover {
+  color: #f05a28;
+}
+
+.infos_connec img {
+  margin: 0 0.2rem 0 0.5rem;
+}
+
 .body .main {
   padding: 0;
   display: -webkit-box;
@@ -101,18 +151,6 @@
 .body .main .side_bar nav ul li .underline {
   height: 2px;
   border-bottom: solid white 1px;
-}
-
-.body .main .infos_connec {
-  background-color: #e6e7e8;
-  height: 10vh;
-  width: 100%;
-  font-family: "lato bold";
-  font-size: 0.8em;
-}
-
-.body .main .infos_connec .dropdown:hover .dropdown-menu {
-  display: block;
 }
 
 .body .main .contains_top {
@@ -517,5 +555,160 @@
   background-color: gray;
   -webkit-transition-duration: 0.5s;
           transition-duration: 0.5s;
+}
+
+.body .titre_events h3 {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 2.5em;
+  margin-bottom: 1rem;
+  font-family: "anton";
+}
+
+.body .titre_events .info_error {
+  text-align: center;
+  font-family: "lato bold";
+  color: #f05a28;
+}
+
+.body #calendar-container {
+  overflow-x: scroll;
+  background-color: #333;
+  color: white;
+  width: 90vw;
+  min-height: 300px;
+  max-width: 800px;
+  display: block;
+  margin: 2vh auto;
+  padding: 5px 10px;
+  font-family: "lato bold";
+}
+
+.body #calendar-container #calendar-title {
+  width: 90%;
+  margin: 5vh auto;
+  text-align: center;
+  font-family: "lato bold";
+}
+
+.body #calendar-container #calendar-table {
+  width: auto;
+  margin: auto;
+}
+
+.body #calendar-container #calendar-table td,
+.body #calendar-container #calendar-table th {
+  padding: 15px 20px;
+  border: none;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.body #calendar-container .today-cell {
+  background-color: #888;
+}
+
+.body #calendar-container #date-text {
+  text-align: center;
+}
+
+.body #calendar-container .btn {
+  display: inline-block;
+  width: 0px;
+  height: 0px;
+  border: 10px solid #333;
+  margin: 1px 10px;
+}
+
+.body #calendar-container .btn.left {
+  border-right: 10px solid white;
+  margin: 0px;
+  padding: 0px;
+}
+
+.body #calendar-container .btn.right {
+  border-left: 10px solid white;
+  margin: 0px;
+  padding: 0px;
+}
+
+.body #calendar-container .btn.left:hover {
+  border-right: 10px solid #ccc;
+  cursor: pointer;
+}
+
+.body #calendar-container .btn.right:hover {
+  border-left: 10px solid #ccc;
+  cursor: pointer;
+}
+
+.body #calendar-container #calendar-table td:hover {
+  background-color: #ddd;
+  cursor: pointer;
+  color: black;
+}
+
+.formulaire_notif_user {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.formulaire_notif_user .input_notifs {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.formulaire_notif_user .input_notifs h4 {
+  margin-top: 1rem;
+  font-size: 1.2em;
+  font-family: "lato bold";
+  margin-bottom: 1rem;
+  color: #404041;
+}
+
+.formulaire_notif_user .input_notifs label {
+  font-family: "lato bold";
+  color: #f05a28;
+}
+
+.formulaire_notif_user .input_notifs p {
+  margin-bottom: 1rem;
+  font-family: "lato";
+  color: #404041;
+}
+
+.formulaire_notif_user .btn {
+  margin-top: 1rem;
+  font-family: "lato bold";
+  background-color: #f05a28;
+  color: white;
+  width: 100%;
+}
+
+.prochain_match {
+  color: #404041;
+}
+
+.prochain_match h4 {
+  margin-top: 1rem;
+  font-size: 1.2em;
+  font-family: "lato bold";
+  margin-bottom: 1rem;
+}
+
+.prochain_match p {
+  font-family: "lato";
+}
+
+.prochain_match p span {
+  font-family: "lato bold";
+  color: #f05a28;
 }
 /*# sourceMappingURL=style.css.map */

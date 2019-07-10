@@ -67,7 +67,7 @@ if (isset($_GET['logout'])) {
         </div>
         <div class="container">
             <div class="row">
-            <div class="infos_connec">
+                <div class="infos_connec">
                     <?php if (isset($_SESSION['user'])) : ?>
                         <?php echo $_SESSION['user']['username']; ?>
                         (<?php echo ucfirst($_SESSION['user']['user_type']); ?>)
@@ -84,51 +84,82 @@ if (isset($_GET['logout'])) {
             </div>
 
             <!-- CONTENUE PAGE -->
-            <div class="titre_saison">
-                <h3>NOUVELLE SAISON</h3>
+            <div class="titre_events">
+                <h3>CALENDRIER</h3>
                 <div class="info_error">
                     <?php echo display_error(); ?>
                 </div>
             </div>
             <div class=" row">
-                <div class="form_saison col-5">
+                <div id="calendar-container">
+                    <h1 id="calendar-title">
+                        <div class="btn left"></div>
+                        <span>April, 2019</span>
+                        <div class="btn right"></div>
+                    </h1>
+                    <table id="calendar-table">
+                        <tr>
+                            <th>Dim</th>
+                            <th>Lun</th>
+                            <th>Mar</th>
+                            <th>Mer</th>
+                            <th>Jeu</th>
+                            <th>Ven</th>
+                            <th>Sam</th>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>6</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>8</td>
+                            <td>9</td>
+                            <td>10</td>
+                            <td>11</td>
+                            <td>12</td>
+                            <td>13</td>
+                        </tr>
+                        <tr>
+                            <td>14</td>
+                            <td>15</td>
+                            <td>16</td>
+                            <td>17</td>
+                            <td>18</td>
+                            <td>19</td>
+                            <td>20</td>
+                        </tr>
+                        <tr>
+                            <td>21</td>
+                            <td>22</td>
+                            <td>23</td>
+                            <td>24</td>
+                            <td>25</td>
+                            <td>26</td>
+                            <td>27</td>
+                        </tr>
+                        <tr>
+                            <td>28</td>
+                            <td>29</td>
+                            <td>30</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
 
-                    <form method="post" action="saisons.php">
-                        <div class="creation_saison input_group">
-                            <label> Création nouvelle saison</label>
-                            <input type="text" name="date_saison" value="<?php echo $season ?>" placeholder="saison 2020">
-                            <button type="submit" class="btn" name="season_btn"> CREER </button>
-                        </div>
-                    </form>
-                </div>
-                <div class="gestion_saison offset-1 col-5">
-                    <label>Supprimer une saison</label>
-                    <form method="post" action="saisons.php">
-                        <select name="season_user" id="saison_user">
-                            <?php
-                            //déclaration requete sql
-                            $req1 = $db->query('SELECT * FROM saison');
-                            $rows = $req1->rowCount();
-
-                            //boucle pour recuperer plusieurs lignes
-                            if ($rows > 0) {
-                                while ($rows = $req1->fetch()) {
-                                    ?>
-                                    <option value="<?php echo $rows["date_saison"] ?>">
-                                        <?php echo $rows["date_saison"] ?>
-                                    </option>
-
-                                <?php
-                                }
-                            }
-                            ?>
-                        </select>
-                        <button type="submit" class="btn" name="delete_btn"> SUPPRIMER </button>
-                    </form>
+                    </table>
+                    <p id="date-text"></p>
                 </div>
             </div>
         </div>
     </div>
+    <script src="../assets/scripts/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

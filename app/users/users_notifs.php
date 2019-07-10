@@ -1,15 +1,8 @@
 <?php
 include('../functions.php');
-
-if (!isAdmin()) {
-    $_SESSION['msg'] = "You must log in first";
-    header('location: ../login.php');
-}
-
-if (isset($_GET['logout'])) {
-    session_destroy();
-    unset($_SESSION['user']);
-    header("location: ../login.php");
+if (!isLoggedIn()) {
+    $_SESSION['msg'] = "Vous devez être connecté";
+    header('location: login.php');
 }
 ?>
 <!DOCTYPE html>
@@ -21,7 +14,7 @@ if (isset($_GET['logout'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>BkC - Saisons</title>
+    <title>BkC - Nouveau match</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
 </head>
@@ -42,23 +35,20 @@ if (isset($_GET['logout'])) {
                         <nav>
                             <ul>
 
-                                <li><a href="/admin/home.php">HOME</a></li>
+                                <li><a href="../index.php">HOME</a></li>
                                 <div class="underline"></div>
 
-                                <li><a href="/admin/notifs.php">NOTIFICATION</a></li>
+                                <li><a href="users_notifs.php">NOTIFICATION</a></li>
                                 <div class="underline"></div>
 
-                                <li><a href="/admin/events.php">CALENDRIER</a></li>
+                                <li><a href="users_events.php">CALENDRIER</a></li>
                                 <div class="underline"> </div>
 
-                                <li><a href="/admin/saisons.php">SAISONS</a></li>
+                                <li><a href="users_saisons.php">SAISONS</a></li>
                                 <div class="underline"></div>
 
-                                <li><a href="/admin/stats.php">STATISTIQUES</a></li>
+                                <li><a href="users_stats.php">STATISTIQUES</a></li>
                                 <div class="underline"></div>
-
-                                <!-- <li><a href="/admin/events.php">PARAMÈTRES</a></li>
-                                <div class="underline"></div> -->
                             </ul>
                         </nav>
                     </div>
@@ -67,7 +57,7 @@ if (isset($_GET['logout'])) {
         </div>
         <div class="container">
             <div class="row">
-            <div class="infos_connec">
+                <div class="infos_connec">
                     <?php if (isset($_SESSION['user'])) : ?>
                         <?php echo $_SESSION['user']['username']; ?>
                         (<?php echo ucfirst($_SESSION['user']['user_type']); ?>)
@@ -76,7 +66,6 @@ if (isset($_GET['logout'])) {
                     <div class="dropdown inline-block">
                         <img src="../assets/img/icons/arrow.png" width="20px">
                         <ul class="dropdown-menu absolute hidden">
-                            <li class="logout"> <a href="create_user.php">INSCRIPTION</a></li>
                             <li class="logout"> <a href="home.php?logout='1'">DÉCONNEXION</a></li>
                         </ul>
                     </div>
@@ -84,47 +73,60 @@ if (isset($_GET['logout'])) {
             </div>
 
             <!-- CONTENUE PAGE -->
-            <div class="titre_saison">
-                <h3>NOUVELLE SAISON</h3>
-                <div class="info_error">
-                    <?php echo display_error(); ?>
-                </div>
-            </div>
             <div class=" row">
-                <div class="form_saison col-5">
+                <div class="main_notifs offset-1 col-9">
+                    <h3>TRANSPORT MATCH</h3>
+                    <div class="info_error">
+                        <?php echo display_error(); ?>
+                    </div>
+                    <div class="add_events">
 
-                    <form method="post" action="saisons.php">
-                        <div class="creation_saison input_group">
-                            <label> Création nouvelle saison</label>
-                            <input type="text" name="date_saison" value="<?php echo $season ?>" placeholder="saison 2020">
-                            <button type="submit" class="btn" name="season_btn"> CREER </button>
-                        </div>
-                    </form>
-                </div>
-                <div class="gestion_saison offset-1 col-5">
-                    <label>Supprimer une saison</label>
-                    <form method="post" action="saisons.php">
-                        <select name="season_user" id="saison_user">
+
+                        <div class="prochain_match col-5">
                             <?php
-                            //déclaration requete sql
-                            $req1 = $db->query('SELECT * FROM saison');
-                            $rows = $req1->rowCount();
-
-                            //boucle pour recuperer plusieurs lignes
-                            if ($rows > 0) {
-                                while ($rows = $req1->fetch()) {
-                                    ?>
-                                    <option value="<?php echo $rows["date_saison"] ?>">
-                                        <?php echo $rows["date_saison"] ?>
-                                    </option>
-
-                                <?php
-                                }
+                            $row = "";
+                            $stmt = $db->prepare("SELECT * FROM planning
+                        ORDER BY events DESC");
+                            if ($stmt->execute(array())) {
+                                $row = $stmt->fetch()
+                                ?>
+                                <h4>PROCHAIN MATCH</h4>
+                                <p> <span>Date du macth :</span> <?php echo $row[1]; ?> </p>
+                                <p> <span>Lieu du macth :</span> <?php echo $row[2]; ?> </p>
+                                <p> <span>Nombre de joueurs :</span> <?php echo $row[3]; ?> </p>
+                            <?php
                             }
+
                             ?>
-                        </select>
-                        <button type="submit" class="btn" name="delete_btn"> SUPPRIMER </button>
-                    </form>
+                        </div>
+                        <div class="formulaire_notif_user offset-1 col-6">
+                            <form action="users_notifs.php" method="post">
+
+                                <div class="d-none">
+                                        <input type="text" class="jour_event" name="jour_event" value="<?php echo $row[1]; ?>" readonly>
+                                        <input type="text" class="id_user" name="id_user" value="<?php echo $_SESSION['user']['username']; ?>" readonly>
+                                </div>
+                                <div class="input_notifs">
+                                    <h4> TRANSPORT DES JOUEURS</h4>
+                                    <p> Pouvez-vous conduire des joueurs au match le <?php echo $row[1]; ?> à <?php echo $row[2]; ?>? </p>
+                                    <label>RÉPONSE</label>
+                                    <input type="text" class="reponse" name="reponse" value="<?php echo $reponse; ?>">
+                                </div>
+                                <div class="input_notifs">
+                                    <label>NOMBRE DE PLACES DISPONIBLE</label>
+                                    <input type="text" class="reponse" name="reponse" value="<?php echo $reponse; ?>">
+                                </div>
+
+                                <!-- <div class="input_notifs">
+                                    <label>NOMBRE DE PLACES</label>
+                                    <input type="text" class="reponse" name="reponse" value="">
+                                </div> -->
+
+                                <button type="submit" class="btn" name="reponse_btn">VALIDER</button>
+                                Modifier reponse ?
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>

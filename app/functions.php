@@ -12,6 +12,10 @@ $errors   = array();
 $dateEvent = "";
 $lieuMatch = "";
 $dispoEvent = "";
+$jour_event = "";
+$id_user = "";
+$reponse = "";
+$recupUser = "";
 // $LastUsers = NULL;
 // $LastSeason = NULL;
 
@@ -26,6 +30,9 @@ if (isset($_POST['season_btn'])) {
 
 if (isset($_POST['date_btn'])) {
     add_date();
+}
+if (isset($_POST['reponse_btn'])) {
+    reponse();
 }
 
 if (isset($_POST['delete_btn'])) {
@@ -91,6 +98,7 @@ function register()
         }
     }
 }
+
 
 // return user array from their id
 // function getUserById($id)
@@ -273,39 +281,68 @@ function add_date()
         header('location: notifs.php');
     }
 
-    $recupUser = "SELECT id FROM users";
-    $recupUser = $db->prepare($recupUser);
-    $recupUser->execute();
-    $result = $recupUser->fetchAll(PDO::FETCH_ASSOC);
+    // $recupUser = "SELECT id FROM users";
+    // $recupUser = $db->prepare($recupUser);
+    // $recupUser->execute();
+    // $result = $recupUser->fetchAll(PDO::FETCH_ASSOC);
 
-    foreach ($result as $users => $recupUser) {
-        $requete = "INSERT INTO response_parent (jour_event, id_user, reponse) VALUES(:jour_event, :id_user, :reponse)";
-        $sth_user = $db->prepare($requete);
-        $sth_user->bindParam(':jour_event', $dateEvent, PDO::PARAM_STR);
-        $sth_user->bindParam(':id_user', $recupUser['id'], PDO::PARAM_INT);
-        $sth_user->bindParam(':reponse', $noReponse, PDO::PARAM_STR);
-        $sth_user->execute();
+    // foreach ($result as $users => $recupUser) {
+    //     $requete = "INSERT INTO response_parent (jour_event, id_user, reponse) VALUES(:jour_event, :id_user, :reponse)";
+    //     $sth_user = $db->prepare($requete);
+    //     $sth_user->bindParam(':jour_event', $dateEvent, PDO::PARAM_STR);
+    //     $sth_user->bindParam(':id_user', $recupUser['id'], PDO::PARAM_INT);
+    //     $sth_user->bindParam(':reponse', $noReponse, PDO::PARAM_STR);
+    //     $sth_user->execute();
+    // }
+}
+
+function reponse()
+{
+    global $db, $errors;
+
+    $jour_event = $_POST['jour_event'];
+    $id_user = $_POST['id_user'];
+    $reponse = $_POST['reponse'];
+
+    $sql_doublons = "SELECT * FROM response_parent WHERE jour_event='$jour_event' AND id_user='$id_user'";
+    $res_doublons = $db->query($sql_doublons);
+
+    if (empty($reponse)) {
+        array_push($errors, "Réponse non défini");
+    }
+
+    if ($res_doublons->rowCount() > 0) {
+        array_push($errors, "Déja repondu");
+    } else {
+        if (count($errors) == 0) {
+            $sql = "INSERT INTO response_parent (jour_event, id_user, reponse) 
+            VALUES('$jour_event', '$id_user', '$reponse')";
+            // $doublons = "WHERE NOT EXISTS (SELECT * FROM response_parent WHERE jour_event=:jour_event AND id_user=:id_user AND reponse=:reponse)";
+            $sth = $db->prepare($sql);
+            $sth->bindParam(':reponse', $reponse, PDO::PARAM_STR);
+            $sth->execute();
+            $_SESSION['success']  = "New user successfully created!!";
+            header('location: users_notifs.php');
+        }
     }
 }
 
 
+// function delete()
+// {
 
+//     global $db, $season;
+//     $season =  $_POST['date_saison'];
+//     // $deleteSaison = isset($_POST['date_saison']) ? $_POST['date_saison'] : false;
+//     // if (count($errors) == 0) {
 
-function delete()
-{
+//     // if($deleteSaison){
 
-    global $db, $season;
-    $season =  $_POST['date_saison'];
-// $deleteSaison = isset($_POST['date_saison']) ? $_POST['date_saison'] : false;
-    // if (count($errors) == 0) {
+//     $delete = "DELETE FROM saison WHERE (date_saison = :date_saison)";
 
-// if($deleteSaison){
+//     $sthDelete = $db->prepare($delete);
+//     $sthDelete->execute();
 
-        $delete = "DELETE FROM saison WHERE (date_saison = :date_saison)";
-
-        $sthDelete = $db->prepare($delete);
-        $sthDelete->execute();
-        
-        header('location: saisons.php');
-    //  }
-}
+//     header('location: saisons.php');
+//     //  }
+// }
