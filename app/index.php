@@ -13,8 +13,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Bkc - Accueil</title>
+	<meta name="author" content="">
+	<link rel="icon" type="image/png" href="/assets/maquettes/favicon_bkc.png">
+    <title>Accueil</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
 </head>
@@ -41,13 +42,13 @@
                                 <li><a href="/users/users_notifs.php">NOTIFICATION</a></li>
                                 <div class="underline"></div>
 
-                                <li><a href="/user/users_events.php">CALENDRIER</a></li>
+                                <li><a href="/users/users_events.php">CALENDRIER</a></li>
                                 <div class="underline"> </div>
 
-                                <li><a href="/user/users_saisons.php">SAISONS</a></li>
+                                <li><a href="/users/users_saisons.php">SAISONS</a></li>
                                 <div class="underline"></div>
 
-                                <li><a href="/user/users_stats.php">STATISTIQUES</a></li>
+                                <li><a href="/users/users_stats.php">STATISTIQUES</a></li>
                                 <div class="underline"></div>
 
                             </ul>
@@ -67,7 +68,7 @@
                     <div class="dropdown inline-block">
                         <img src="../assets/img/icons/arrow.png" width="20px">
                         <ul class="dropdown-menu absolute hidden">
-                            <li class="logout"> <a href="home.php?logout='1'">DÉCONNEXION</a></li>
+                            <li class="logout"> <a href="index.php?logout='1'">DÉCONNEXION</a></li>
                         </ul>
                     </div>
                 </div>
@@ -78,7 +79,7 @@
                     <!-- 3 CONTAINS TOP -->
                     <div class="contains_top">
                         <!-- NOMBRE D'INSCRIT SUR LA PLATEFORME -->
-                        <div class="nb_inscrit col-6">
+                        <div class="nb_inscrit col-4">
                             <h4> NOMBRE D'UTILISATEUR</h4>
                             <?php
                             $utilisateur = "";
@@ -91,8 +92,8 @@
                             ?>
                         </div>
                         <!-- DATE DU DERNIER MATCH -->
-                        <div class="last_match offset-1 col-6">
-                            <h4> Prochain match </h4>
+                        <div class="last_match offset-1 col-5">
+                            <h4> PROCHAIN MATCH </h4>
                             <?php
                             $infoMatch = "";
                             $connectMatch = $db->prepare("SELECT * FROM planning
@@ -108,9 +109,9 @@
                             ?>
                         </div>
                         <!-- PARENT AYANT LE PLUS TRANSPORTE DE JOUEURS -->
-                        <div class="top_un offset-1 col-6">
-                            <h4> Top 1 </h4>
-
+                        <div class="top_un offset-1 col-4">
+                            <h4> NOMBRE DE TRAJET </h4>
+							
 
 
                         </div>

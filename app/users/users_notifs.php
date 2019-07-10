@@ -14,7 +14,8 @@ if (!isLoggedIn()) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>BkC - Nouveau match</title>
+    <link rel="icon" type="image/png" href="../assets/maquettes/favicon_bkc.png">
+    <title>Prochain match</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
 </head>
@@ -66,7 +67,7 @@ if (!isLoggedIn()) {
                     <div class="dropdown inline-block">
                         <img src="../assets/img/icons/arrow.png" width="20px">
                         <ul class="dropdown-menu absolute hidden">
-                            <li class="logout"> <a href="home.php?logout='1'">DÉCONNEXION</a></li>
+                            <li class="logout"> <a href="../index.php?logout='1'">DÉCONNEXION</a></li>
                         </ul>
                     </div>
                 </div>
@@ -91,12 +92,26 @@ if (!isLoggedIn()) {
                                 $row = $stmt->fetch()
                                 ?>
                                 <h4>PROCHAIN MATCH</h4>
-                                <p> <span>Date du macth :</span> <?php echo $row[1]; ?> </p>
-                                <p> <span>Lieu du macth :</span> <?php echo $row[2]; ?> </p>
+                                <p> <span>Date du match :</span> <?php echo $row[1]; ?> </p>
+                                <p> <span>Lieu du match :</span> <?php echo $row[2]; ?> </p>
                                 <p> <span>Nombre de joueurs :</span> <?php echo $row[3]; ?> </p>
                             <?php
                             }
-
+                            ?>
+                            <?php
+                            $lastRow = "";
+                            $session_id = $_SESSION['user']['username'];
+                            $LastStmt = $db->prepare("SELECT * FROM response_parent
+                            WHERE id_user='$session_id' AND jour_event ='$row[1]'");
+                            if ($LastStmt->execute(array())) {
+                                $lastRow = $LastStmt->fetch()
+                                ?>
+                                <h4>RÉPONSE ENREGISTRÉ</h4>
+                                <p> <span>Date du match :</span> <?php echo $lastRow[1]; ?>  </p>
+                                <p> <span>Réponse :</span> <?php echo $lastRow[3]; ?> </p>
+                                <p> <span>Nombre de joueurs :</span> <?php echo $lastRow[4]; ?> </p>
+                                <?php
+                            }
                             ?>
                         </div>
                         <div class="formulaire_notif_user offset-1 col-6">
@@ -114,7 +129,7 @@ if (!isLoggedIn()) {
                                 </div>
                                 <div class="input_notifs">
                                     <label>NOMBRE DE PLACES DISPONIBLE</label>
-                                    <input type="text" class="reponse" name="reponse" value="<?php echo $reponse; ?>">
+                                    <input type="text" class="place" name="place" value="<?php echo $place; ?>">
                                 </div>
 
                                 <!-- <div class="input_notifs">
@@ -123,7 +138,7 @@ if (!isLoggedIn()) {
                                 </div> -->
 
                                 <button type="submit" class="btn" name="reponse_btn">VALIDER</button>
-                                Modifier reponse ?
+                                
                         </div>
 
                     </div>

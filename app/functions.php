@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-// connect to database
+// CONNEXION BADE DE DONNEE
 $db = new PDO('mysql:host=localhost;dbname=multi_login', 'root', 'online@2017');
 
-// variable declaration
+// DECLARATION DES VARIABLES
 $username = "";
 $email    = "";
 $season    = "";
@@ -16,10 +16,9 @@ $jour_event = "";
 $id_user = "";
 $reponse = "";
 $recupUser = "";
-// $LastUsers = NULL;
-// $LastSeason = NULL;
-
-// call the register() function if register_btn is clicked
+$place = "";
+$sendMail = "";
+// ACTIVER FUNCTION BOUTON
 if (isset($_POST['register_btn'])) {
     register();
 }
@@ -38,50 +37,52 @@ if (isset($_POST['reponse_btn'])) {
 if (isset($_POST['delete_btn'])) {
     delete();
 }
-// REGISTER USER
+
+
+// CREATION UTILISATEUR
 function register()
 {
-    // call these variables with the global keyword to make them available in function
+    // DECLARATION VARIABLES
     global $db, $errors, $username, $email;
 
-    // receive all input values from the form. Call the e() function
-    // defined below to escape form values
-
+    // RECUPERER INPUT
     $username    =  $_POST['username'];
     $email       =  $_POST['email'];
     $password_1  =  $_POST['password_1'];
     $password_2  =  $_POST['password_2'];
 
+    // REQUETES SI DOUBLONS
     $sql_u = "SELECT * FROM users WHERE username='$username'";
     $sql_e = "SELECT * FROM users WHERE email='$email'";
     $res_u = $db->query($sql_u);
     $res_e = $db->query($sql_e);
 
-    // form validation: ensure that the form is correctly filled
+    // ERREURS
     if (empty($username)) {
-        array_push($errors, "Username is required");
+        array_push($errors, "Le champ pseudo est obligatoire");
     }
     if (empty($email)) {
-        array_push($errors, "Email is required");
+        array_push($errors, "Le champ email est obligatoire");
     }
     if (empty($password_1)) {
-        array_push($errors, "Password is required");
+        array_push($errors, "Le champ mot de passe est obligatoire");
     }
     if ($password_1 != $password_2) {
-        array_push($errors, "The two passwords do not match");
+        array_push($errors, "Les deux mots de passes ne correspondent pas");
     }
 
+    // CONDITIONS EN CAS DE DOUBLONS
     if ($res_u->rowCount() > 0) {
-        array_push($errors, "Sorry... username already taken");
+        array_push($errors, "Pseudo déjà pris");
     } else if ($res_e->rowCount() > 0) {
-        array_push($errors, "Sorry... email already taken");
+        array_push($errors, "Email déjà pris");
     } else {
-        // register user if there are no errors in the form
+        // SI IL N'Y A PAS D'ERREURS :
         if (count($errors) == 0) {
-            $password = md5($password_1); //encrypt the password before saving in the database
+            $password = md5($password_1); //CRYPTAGE DU MOT DE PASSE
             $user_type = $_POST['user_type'];
             $sql = "INSERT INTO users (username, email, user_type, password) 
-					  VALUES(:username, :email, :user_type, :password)";
+					VALUES(:username, :email, :user_type, :password)";
             $sth = $db->prepare($sql);
             $sth->bindParam(':username', $username, PDO::PARAM_STR);
             $sth->bindParam(':email', $email, PDO::PARAM_STR);
@@ -89,28 +90,13 @@ function register()
             $sth->bindParam(':password', $password, PDO::PARAM_STR);
             $sth->execute();
 
-            // $last_id = $db->lastInsertId();
-            // var_dump($last_id);
-            // $seasonUser  =  $_POST['season_user'];
-
             $_SESSION['success']  = "New user successfully created!!";
             header('location: home.php');
         }
     }
 }
 
-
-// return user array from their id
-// function getUserById($id)
-// {
-// 	global $db;
-// 	$query = "SELECT * FROM users WHERE id=" . $id;
-// 	$result = mysqli_query($db, $query);
-// 	$user = mysqli_fetch_assoc($result);
-// 	echo'ici';
-// 	return $user;
-// }
-
+// CREATION DES SAISONS
 function createSeason()
 {
 
@@ -130,16 +116,11 @@ function createSeason()
         $_SESSION['success']  = "New user successfully created!!";
         header('location: saisons.php');
     }
-    // $recupSaisonFor = "SELECT id FROM saison";
-    // $recupSaisonFor = $db->prepare($recupSaisonFor);
-    // $recupSaisonFor->execute();
-    // $result = $recupSaisonFor->fetchAll(PDO::FETCH_ASSOC);
 
     $recupUserFor = "SELECT id FROM users";
     $recupUserFor = $db->prepare($recupUserFor);
     $recupUserFor->execute();
     $result = $recupUserFor->fetchAll(PDO::FETCH_ASSOC);
-
 
 
     // output data of each row
@@ -164,6 +145,7 @@ function display_error()
         echo '</div>';
     }
 }
+
 
 function isLoggedIn()
 {
@@ -249,13 +231,12 @@ function isAdmin()
 // Ajout date d'evenement et recuperation donnees
 function add_date()
 {
-
     // ajout de la date de l'evenement
-    global $db, $errors, $result, $users;
+    global $db, $errors;
     $dateEvent = $_POST['date_events'];
     $lieuMatch = $_POST['lieu_events'];
     $dispoEvent = $_POST['dispo_events'];
-    $noReponse = "";
+    // $sendMail = $_SESSION = ['user']['email'];
 
     if (empty($dateEvent)) {
         array_push($errors, "Date non défini");
@@ -266,7 +247,6 @@ function add_date()
     if (empty($dispoEvent)) {
         array_push($errors, "Nombre de joueurs non défini");
     }
-
     if (count($errors) == 0) {
         // Requete insert mon formulaire dans la table planning
         $sql = "INSERT INTO planning (events, lieu, places_dispo) 
@@ -281,19 +261,13 @@ function add_date()
         header('location: notifs.php');
     }
 
-    // $recupUser = "SELECT id FROM users";
-    // $recupUser = $db->prepare($recupUser);
-    // $recupUser->execute();
-    // $result = $recupUser->fetchAll(PDO::FETCH_ASSOC);
 
-    // foreach ($result as $users => $recupUser) {
-    //     $requete = "INSERT INTO response_parent (jour_event, id_user, reponse) VALUES(:jour_event, :id_user, :reponse)";
-    //     $sth_user = $db->prepare($requete);
-    //     $sth_user->bindParam(':jour_event', $dateEvent, PDO::PARAM_STR);
-    //     $sth_user->bindParam(':id_user', $recupUser['id'], PDO::PARAM_INT);
-    //     $sth_user->bindParam(':reponse', $noReponse, PDO::PARAM_STR);
-    //     $sth_user->execute();
-    // }
+    foreach ($users as $dateEvent => $sendMail) {
+        // Le message
+        $message = "TEST MAIL";
+        // Envoi du mail
+        mail('4a29d70f1fa597-fcd013@inbox.mailtrap.io', 'Mon Sujet', $message);
+    }
 }
 
 function reponse()
@@ -303,6 +277,7 @@ function reponse()
     $jour_event = $_POST['jour_event'];
     $id_user = $_POST['id_user'];
     $reponse = $_POST['reponse'];
+    $place = $_POST['place'];
 
     $sql_doublons = "SELECT * FROM response_parent WHERE jour_event='$jour_event' AND id_user='$id_user'";
     $res_doublons = $db->query($sql_doublons);
@@ -315,11 +290,11 @@ function reponse()
         array_push($errors, "Déja repondu");
     } else {
         if (count($errors) == 0) {
-            $sql = "INSERT INTO response_parent (jour_event, id_user, reponse) 
-            VALUES('$jour_event', '$id_user', '$reponse')";
-            // $doublons = "WHERE NOT EXISTS (SELECT * FROM response_parent WHERE jour_event=:jour_event AND id_user=:id_user AND reponse=:reponse)";
+            $sql = "INSERT INTO response_parent (jour_event, id_user, reponse, place) 
+            VALUES('$jour_event', '$id_user', '$reponse', '$place')";
             $sth = $db->prepare($sql);
             $sth->bindParam(':reponse', $reponse, PDO::PARAM_STR);
+            $sth->bindParam(':place', $place, PDO::PARAM_STR);
             $sth->execute();
             $_SESSION['success']  = "New user successfully created!!";
             header('location: users_notifs.php');
@@ -328,21 +303,15 @@ function reponse()
 }
 
 
-// function delete()
-// {
+function delete()
+{
+    global $db, $season;
+    $season =  $_POST['date_saison'];
 
-//     global $db, $season;
-//     $season =  $_POST['date_saison'];
-//     // $deleteSaison = isset($_POST['date_saison']) ? $_POST['date_saison'] : false;
-//     // if (count($errors) == 0) {
+    $delete = "DELETE FROM saison WHERE (date_saison =':date_saison')";
 
-//     // if($deleteSaison){
-
-//     $delete = "DELETE FROM saison WHERE (date_saison = :date_saison)";
-
-//     $sthDelete = $db->prepare($delete);
-//     $sthDelete->execute();
-
-//     header('location: saisons.php');
-//     //  }
-// }
+    $sthDelete = $db->prepare($delete);
+    $sthDelete->bindParam(':date_saison', $season, PDO::PARAM_STR);
+    $sthDelete->execute();
+    header('location: saisons.php');
+}

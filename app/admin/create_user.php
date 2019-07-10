@@ -3,7 +3,8 @@
 <html>
 
 <head>
-	<title>Bkc - Créer un compte</title>
+<link rel="icon" type="image/png" href="../assets/maquettes/favicon_bkc.png">
+	<title>Créer un compte</title>
 	<link rel="stylesheet" type="text/css" href="../assets/css/style.css">
 </head>
 

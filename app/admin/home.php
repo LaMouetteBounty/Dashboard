@@ -21,7 +21,8 @@ if (isset($_GET['logout'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Admin - saisons</title>
+    <link rel="icon" type="image/png" href="../assets/maquettes/favicon_bkc.png">
+    <title>Accueil</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
 </head>
@@ -86,11 +87,11 @@ if (isset($_GET['logout'])) {
                     <!-- 3 CONTAINS TOP -->
                     <div class="contains_top">
                         <!-- NOMBRE D'INSCRIT SUR LA PLATEFORME -->
-                        <div class="nb_inscrit col-6">
+                        <div class="nb_inscrit col-4">
                             <h4> NOMBRE D'UTILISATEUR</h4>
                             <?php
                             $utilisateur = "";
-                            $connect = $db->prepare("SELECT COUNT(*) FROM users");
+                            $connect = $db->prepare("SELECT COUNT(*) FROM users WHERE user_type='user'");
                             if ($connect->execute(array())) {
                                 $utilisateur = $connect->fetch();
                                 echo $utilisateur[0];
@@ -100,7 +101,7 @@ if (isset($_GET['logout'])) {
                         </div>
                         <!-- DATE DU DERNIER MATCH -->
                         <div class="last_match offset-1 col-6">
-                            <h4> Prochain match </h4>
+                            <h4>PROCHAIN MATCH</h4>
                             <?php
                             $infoMatch = "";
                             $connectMatch = $db->prepare("SELECT * FROM planning
@@ -116,10 +117,17 @@ if (isset($_GET['logout'])) {
                             ?>
                         </div>
                         <!-- PARENT AYANT LE PLUS TRANSPORTE DE JOUEURS -->
-                        <div class="top_un offset-1 col-6">
-                            <h4> Top 1 </h4>
-
-
+                        <div class="top_un offset-1 col-4">
+                            <h4>TOTAL DES VOLONTAIRES</h4>
+                            <?php
+                            $userTop = $_SESSION['user']['username'];
+                            $infoCompte = "";
+                            $connectCompteur = $db->prepare("SELECT COUNT(*) FROM response_parent WHERE reponse ='oui' ");
+                            if ($connectCompteur->execute(array())) {
+                                $infoCompte  = $connectCompteur->fetch();
+                                echo $infoCompte[0];
+                            }
+                            ?>
 
                         </div>
                     </div>

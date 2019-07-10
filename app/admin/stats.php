@@ -86,47 +86,13 @@ if (isset($_GET['logout'])) {
 
             <!-- CONTENUE PAGE -->
             <div class="titre_saison">
-                <h3>NOUVELLE SAISON</h3>
+                <h3>STATISTIQUES</h3>
                 <div class="info_error">
                     <?php echo display_error(); ?>
                 </div>
             </div>
             <div class=" row">
-                <div class="form_saison col-5">
-
-                    <form method="post" action="saisons.php">
-                        <div class="creation_saison input_group">
-                            <label> Créer une nouvelle saison</label>
-                            <input type="text" name="date_saison" value="<?php echo $season ?>" placeholder="saison 2020">
-                            <button type="submit" class="btn" name="season_btn"> CREER </button>
-                        </div>
-                    </form>
-                </div>
-                <div class="gestion_saison offset-1 col-5">
-                    <label>Supprimer une saison</label>
-                    <form method="post" action="saisons.php">
-                        <select name="season_user" id="saison_user">
-                            <?php
-                            //déclaration requete sql
-                            $req1 = $db->query('SELECT * FROM saison');
-                            $rows = $req1->rowCount();
-
-                            //boucle pour recuperer plusieurs lignes
-                            if ($rows > 0) {
-                                while ($rows = $req1->fetch()) {
-                                    ?>
-                                    <option value="<?php echo $rows["date_saison"] ?>">
-                                        <?php echo $rows["date_saison"] ?>
-                                    </option>
-
-                                <?php
-                                }
-                            }
-                            ?>
-                        </select>
-                        <button type="submit" class="btn" name="delete_btn"> SUPPRIMER </button>
-                    </form>
-                </div>
+               
             </div>
         </div>
     </div>
