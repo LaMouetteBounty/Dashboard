@@ -161,7 +161,11 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  margin: 2rem 2rem 2rem 2rem;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 100%;
+  margin: 2rem 0 2rem 0;
 }
 
 .body .main .contains_top .nb_inscrit {
@@ -219,6 +223,22 @@
   font-size: 1.1em;
 }
 
+.body .main .contains_graph {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.body .main .contains_graph .graph_bar #myChart {
+  background-color: white;
+  -webkit-box-shadow: 5px 5px 15px 0px #cfcfcf;
+          box-shadow: 5px 5px 15px 0px #cfcfcf;
+}
+
 .bg_login {
   background-image: url("../img/background/basketball-1081882.jpg");
   background-size: cover;
@@ -228,6 +248,12 @@
 .bg_login .container {
   padding: 10rem 0 0 0;
   width: 400px;
+}
+
+.bg_login .container .info_error {
+  text-align: center;
+  font-family: "lato bold";
+  color: #f05a28;
 }
 
 .bg_login .container .main_login {

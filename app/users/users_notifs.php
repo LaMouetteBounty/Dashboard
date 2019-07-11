@@ -117,10 +117,11 @@ if (!isLoggedIn()) {
                         <div class="formulaire_notif_user offset-1 col-6">
                             <form action="users_notifs.php" method="post">
 
-                                <div class="d-none">
+                                <div class="">
                                         <input type="text" class="jour_event" name="jour_event" value="<?php echo $row[1]; ?>" readonly>
-                                        <input type="text" class="id_user" name="id_user" value="<?php echo $_SESSION['user']['username']; ?>" readonly>
-                                </div>
+                                        <input type="text" class="id_username" name="id_username" value="<?php echo $_SESSION['user']['username']; ?>" readonly>
+                                        <input type="text" class="id_user" name="id_user" value="<?php echo $_SESSION['user']['id']; ?>" readonly>
+                                    </div>
                                 <div class="input_notifs">
                                     <h4> TRANSPORT DES JOUEURS</h4>
                                     <p> Pouvez-vous conduire des joueurs au match le <?php echo $row[1]; ?> à <?php echo $row[2]; ?>? </p>

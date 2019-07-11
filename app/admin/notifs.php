@@ -114,16 +114,17 @@ if (isset($_GET['logout'])) {
                         </div>
                         <div class="dernier_match offset-1 col-5">
                             <?php
-                            $row = "";
-                            $stmt = $db->prepare("SELECT * FROM planning
+                            $rowPlanning = "";
+                            $stmtPlanning = $db->prepare("SELECT * FROM planning
                         ORDER BY events DESC");
-                            if ($stmt->execute(array())) {
-                                $row = $stmt->fetch()
+                            if ($stmtPlanning->execute(array())) {
+                                $rowPlanning  = $stmtPlanning->fetch()
                                 ?>
+                                                     
                                 <h4>DERNIER MATCH ENREGISTRÉ</h4>
-                                <p> <span>Date du macth :</span> <?php echo $row[1]; ?> </p>
-                                <p> <span>Lieu du macth :</span> <?php echo $row[2]; ?> </p>
-                                <p> <span>Nombre de joueurs :</span> <?php echo $row[3]; ?> </p>
+                                <p> <span>Date du macth :</span> <?php echo $rowPlanning [1]; ?> </p>
+                                <p> <span>Lieu du macth :</span> <?php echo $rowPlanning [2]; ?> </p>
+                                <p> <span>Nombre de joueurs :</span> <?php echo $rowPlanning [3]; ?> </p>
                             <?php
                             }
 

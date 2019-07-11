@@ -40,23 +40,7 @@
 
 						<div class="input-group">
 							<label>SAISON</label>
-							<select name="season_user" id="saison_user">
-								<?php
-								//déclaration requete sql
-								$req1 = $db->query('SELECT * FROM saison');
-								$rows = $req1->rowCount();
-								//boucle pour recuperer plusieurs lignes
-								if ($rows > 0) {
-									while ($rows = $req1->fetch()) {
-										?>
-										<option value="<?php echo $rows["date_saison"] ?>">
-											<?php echo $rows["date_saison"] ?>
-										</option>
-									<?php
-									}
-								}
-								?>
-							</select>
+							<input type="date_saison" name="date_saison" value="<?php echo $date_saison; ?>">
 						</div>
 						<div class="input-group">
 							<label>TYPE D'UTILISATEUR</label>

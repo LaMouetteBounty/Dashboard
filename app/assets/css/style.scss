@@ -127,14 +127,10 @@
     .contains_top {
       display: flex;
       flex-direction: row;
-      margin: 2rem 2rem 2rem 2rem;
-      // align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin: 2rem 0 2rem 0;
       .nb_inscrit {
-        h4 {
-          font-family: "lato bold";
-          color: #f05a28;
-          font-size: 1.1em;
-        }
         font-family: "lato bold";
         color: #404041;
         font-size: 1.2em;
@@ -142,6 +138,11 @@
         background-color: white;
         box-shadow: 5px 5px 15px 0px #cfcfcf;
         padding: 1rem;
+        h4 {
+          font-family: "lato bold";
+          color: #f05a28;
+          font-size: 1.1em;
+        }
       }
       .last_match {
         h4 {
@@ -175,6 +176,21 @@
         padding: 1rem;
       }
     }
+    .contains_graph {
+      display: flex;
+      flex-direction: row;
+          // .tableau_top {
+
+          // }
+
+
+      .graph_bar {
+        #myChart {
+          background-color: white;
+          box-shadow: 5px 5px 15px 0px #cfcfcf;
+        }
+      }
+    }
   }
 }
 
@@ -191,7 +207,11 @@
   .container {
     padding: 10rem 0 0 0;
     width: 400px;
-
+    .info_error {
+      text-align: center;
+      font-family: "lato bold";
+      color: #f05a28;
+    }
     .main_login {
       background-color: rgba($color: white, $alpha: 0.85);
       display: flex;
@@ -561,7 +581,6 @@
   }
 }
 
-
 // ##########################################################
 // ##########################################################
 //                        USERS_NOTIFS.PHP
@@ -569,7 +588,7 @@
 // ##########################################################
 
 .formulaire_notif_user {
-align-items: center;
+  align-items: center;
   .input_notifs {
     display: flex;
     flex-direction: column;

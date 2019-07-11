@@ -13,11 +13,13 @@ $dateEvent = "";
 $lieuMatch = "";
 $dispoEvent = "";
 $jour_event = "";
-$id_user = "";
+$id_username = "";
 $reponse = "";
 $recupUser = "";
 $place = "";
 $sendMail = "";
+$id_user = "";
+$date_saison = "";
 // ACTIVER FUNCTION BOUTON
 if (isset($_POST['register_btn'])) {
     register();
@@ -50,6 +52,7 @@ function register()
     $email       =  $_POST['email'];
     $password_1  =  $_POST['password_1'];
     $password_2  =  $_POST['password_2'];
+    $date_saison  =  $_POST['date_saison'];
 
     // REQUETES SI DOUBLONS
     $sql_u = "SELECT * FROM users WHERE username='$username'";
@@ -59,7 +62,7 @@ function register()
 
     // ERREURS
     if (empty($username)) {
-        array_push($errors, "Le champ pseudo est obligatoire");
+        array_push($errors, "Le champ identifiant est obligatoire");
     }
     if (empty($email)) {
         array_push($errors, "Le champ email est obligatoire");
@@ -73,7 +76,7 @@ function register()
 
     // CONDITIONS EN CAS DE DOUBLONS
     if ($res_u->rowCount() > 0) {
-        array_push($errors, "Pseudo déjà pris");
+        array_push($errors, "Identifiant déjà pris");
     } else if ($res_e->rowCount() > 0) {
         array_push($errors, "Email déjà pris");
     } else {
@@ -81,13 +84,14 @@ function register()
         if (count($errors) == 0) {
             $password = md5($password_1); //CRYPTAGE DU MOT DE PASSE
             $user_type = $_POST['user_type'];
-            $sql = "INSERT INTO users (username, email, user_type, password) 
-					VALUES(:username, :email, :user_type, :password)";
+            $sql = "INSERT INTO users (username, email, user_type, password, date_saison) 
+					VALUES(:username, :email, :user_type, :password, :date_saison)";
             $sth = $db->prepare($sql);
             $sth->bindParam(':username', $username, PDO::PARAM_STR);
             $sth->bindParam(':email', $email, PDO::PARAM_STR);
             $sth->bindParam(':user_type', $user_type, PDO::PARAM_STR);
             $sth->bindParam(':password', $password, PDO::PARAM_STR);
+            $sth->bindParam(':date_saison', $date_saison, PDO::PARAM_STR);
             $sth->execute();
 
             $_SESSION['success']  = "New user successfully created!!";
@@ -179,10 +183,10 @@ function login()
 
     // make sure form is filled properly
     if (empty($username)) {
-        array_push($errors, "Username is required");
+        array_push($errors, "Le champ identifiant est obligatoire");
     }
     if (empty($password)) {
-        array_push($errors, "Password is required");
+        array_push($errors, "Le mot de passe est obligatoire");
     }
 
     // attempt login if no errors on form
@@ -204,16 +208,16 @@ function login()
             if ($logged_in_user['user_type'] == 'admin') {
 
                 $_SESSION['user'] = $logged_in_user;
-                $_SESSION['success']  = "You are now logged in";
+                $_SESSION['success']  = "Vous êtes bien connecté en tant que";
                 header('location: admin/home.php');
             } else {
                 $_SESSION['user'] = $logged_in_user;
-                $_SESSION['success']  = "You are now logged in";
+                $_SESSION['success']  = "Connecté";
 
                 header('location: index.php');
             }
         } else {
-            array_push($errors, "Wrong username/password combination");
+            array_push($errors, "Identifiant ou mot de passe incorrect !");
         }
     }
 }
@@ -261,13 +265,17 @@ function add_date()
         header('location: notifs.php');
     }
 
+    // $recupMail = "SELECT email FROM users";
+    // $recupMail = $db->prepare($recupMail);
+    // $recupMail->execute();
+    // $resultMail = $recupMail->fetchAll(PDO::FETCH_ASSOC);
 
-    foreach ($users as $dateEvent => $sendMail) {
-        // Le message
-        $message = "TEST MAIL";
-        // Envoi du mail
-        mail('4a29d70f1fa597-fcd013@inbox.mailtrap.io', 'Mon Sujet', $message);
-    }
+    // foreach ($resultMail as $users => $sendMail) {
+    //     // Le message
+    //     $message = "TEST MAIL";
+    //     // Envoi du mail
+    //     mail('4a29d70f1fa597-fcd013@inbox.mailtrap.io', 'Mon Sujet', $message);
+    // }
 }
 
 function reponse()
@@ -275,11 +283,12 @@ function reponse()
     global $db, $errors;
 
     $jour_event = $_POST['jour_event'];
-    $id_user = $_POST['id_user'];
+    $id_username = $_POST['id_username'];
     $reponse = $_POST['reponse'];
     $place = $_POST['place'];
+    $id_user = $_POST['id_user'];
 
-    $sql_doublons = "SELECT * FROM response_parent WHERE jour_event='$jour_event' AND id_user='$id_user'";
+    $sql_doublons = "SELECT * FROM response_parent WHERE jour_event='$jour_event' AND id_username='$id_username'";
     $res_doublons = $db->query($sql_doublons);
 
     if (empty($reponse)) {
@@ -290,8 +299,8 @@ function reponse()
         array_push($errors, "Déja repondu");
     } else {
         if (count($errors) == 0) {
-            $sql = "INSERT INTO response_parent (jour_event, id_user, reponse, place) 
-            VALUES('$jour_event', '$id_user', '$reponse', '$place')";
+            $sql = "INSERT INTO response_parent (jour_event, id_username, reponse, place, id_user) 
+            VALUES('$jour_event', '$id_username', '$reponse', '$place', '$id_user ')";
             $sth = $db->prepare($sql);
             $sth->bindParam(':reponse', $reponse, PDO::PARAM_STR);
             $sth->bindParam(':place', $place, PDO::PARAM_STR);
@@ -303,15 +312,34 @@ function reponse()
 }
 
 
-function delete()
-{
-    global $db, $season;
-    $season =  $_POST['date_saison'];
+// function delete()
+// {
+//     global $db, $season;
+//     $season =  $_POST['date_saison'];
 
-    $delete = "DELETE FROM saison WHERE (date_saison =':date_saison')";
+//     $delete = "DELETE FROM saison WHERE (date_saison =':date_saison')";
 
-    $sthDelete = $db->prepare($delete);
-    $sthDelete->bindParam(':date_saison', $season, PDO::PARAM_STR);
-    $sthDelete->execute();
-    header('location: saisons.php');
-}
+//     $sthDelete = $db->prepare($delete);
+//     $sthDelete->bindParam(':date_saison', $season, PDO::PARAM_STR);
+//     $sthDelete->execute();
+//     header('location: saisons.php');
+// }
+
+
+// function statCount() {
+//     global $db;
+
+//     $jour_event = $_POST['jour_event'];
+//     $id_user = $_POST['id_user'];
+//     $reponse = $_POST['reponse'];
+//     $place = $_POST['place'];
+
+//         $sql = "SELECT COUNT(*) FROM response_parent WHERE reponse='oui' AND id_user='$id_user'";
+//         $sth = $db->prepare($sql);
+//         $sth->bindParam(':reponse', $reponse, PDO::PARAM_STR);
+//         $sth->bindParam(':place', $place, PDO::PARAM_STR);
+//         $sth->execute();
+//         $_SESSION['success']  = "New user successfully created!!";
+//         header('location: users_notifs.php');
+    
+// }

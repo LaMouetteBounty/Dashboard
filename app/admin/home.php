@@ -25,6 +25,7 @@ if (isset($_GET['logout'])) {
     <title>Accueil</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 </head>
 
 <body class="body">
@@ -87,7 +88,7 @@ if (isset($_GET['logout'])) {
                     <!-- 3 CONTAINS TOP -->
                     <div class="contains_top">
                         <!-- NOMBRE D'INSCRIT SUR LA PLATEFORME -->
-                        <div class="nb_inscrit col-4">
+                        <div class="nb_inscrit">
                             <h4> NOMBRE D'UTILISATEUR</h4>
                             <?php
                             $utilisateur = "";
@@ -96,11 +97,10 @@ if (isset($_GET['logout'])) {
                                 $utilisateur = $connect->fetch();
                                 echo $utilisateur[0];
                             }
-
                             ?>
                         </div>
                         <!-- DATE DU DERNIER MATCH -->
-                        <div class="last_match offset-1 col-6">
+                        <div class="last_match">
                             <h4>PROCHAIN MATCH</h4>
                             <?php
                             $infoMatch = "";
@@ -117,10 +117,10 @@ if (isset($_GET['logout'])) {
                             ?>
                         </div>
                         <!-- PARENT AYANT LE PLUS TRANSPORTE DE JOUEURS -->
-                        <div class="top_un offset-1 col-4">
+                        <div class="top_un">
                             <h4>TOTAL DES VOLONTAIRES</h4>
                             <?php
-                            $userTop = $_SESSION['user']['username'];
+                           
                             $infoCompte = "";
                             $connectCompteur = $db->prepare("SELECT COUNT(*) FROM response_parent WHERE reponse ='oui' ");
                             if ($connectCompteur->execute(array())) {
@@ -132,11 +132,109 @@ if (isset($_GET['logout'])) {
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="row contains_graph">
+                    <div class="tableau_top">
+
+
+
+                        </div>
+                <div class="graph_bar">
+                    <select name="choose_user" id="choose_user">
+                    <?php
+                    $req_user = $db->query('SELECT * FROM users');
+                    $row_user = $req_user->rowCount();
+                    
+                    if ($row_user > 0) {
+                        while ($row_user = $req_user->fetch()){
+                            ?>
+                        <option value="<?php echo $row_user["username"] ?>">
+											<?php echo $row_user["username"];?>
+                                        </option>
+                            <?php
+                        } 
+                    }
+                    ?>
+                    </select>
+
+                    <?php
+                    // $janvier = "";
+                    // $sqlJanvier = $db->prepare("SELECT COUNT(reponse='oui') FROM response_parent WHERE id_user='$choose_user'");
+                    // if ($sqlJanvier->execute(array())) {
+                    //     $janvier = $sqlJanvier->fetch();
+                    // }
+                    // $graph = 0;
+                    // for ($i = 0; $i < sizeof($result_graph); $i++) {
+                    // $graph += $result_graph[$i]["places_necessaires"];
+                    // echo ($result_graph[$i]['places_necessaires'] . ',');
+                    // } ?>
+                  
+
+
+
+
+
+
+                    <canvas id="myChart" width="400" height="100"></canvas>
+                    <script>
+                        <?php
+                    $req_user = $db->query('SELECT * FROM users');
+                    $row_user = $req_user->rowCount();
+                    
+                    if ($row_user > 0) {
+                        while ($row_user = $req_user->fetch()){
+                            ?>
+                        var ctx = document.querySelector('#myChart');
+                        var myChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['<?php echo $row_user["username"];?>', '<?php echo $row_user["username"];?>', 'Mars', 'Avril', 'Mai', 'Juin'],
+                                datasets: [{
+                                    label: '',
+                                    data: [ 
+                                    
+                                    ],
+                                    backgroundColor: [
+                                        'rgb(242, 105, 33)',
+                                        'rgb(249, 164, 63)',
+                                        'rgb(252, 180, 20)',
+                                        'rgb(253, 187, 79)',
+                                        'rgb(242, 105, 33)',
+                                        'rgb(255, 213, 81)'
+                                    ],
+                                    borderColor: [
+                                        'rgb(88, 88, 91)',
+                                        'rgb(88, 88, 91)',
+                                        'rgb(88, 88, 91)',
+                                        'rgb(88, 88, 91)',
+                                        'rgb(88, 88, 91)',
+                                        'rgb(88, 88, 91)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                        <?php
+                        } 
+                    }
+                    ?>
+                    </script>
+                    </div>
+            </div></div>
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+            <!-- <script src="script_admin.js"></script> -->
 </body>
 
 </html>

@@ -1,0 +1,189 @@
+ 							
+
+SELECT COUNT(`id_user`,`username`) FROM `response_parent` 
+INNER JOIN users ON response_parent.id_user=users.id
+GROUP BY `id_username`
+
+INNER JOIN `users` ON `response_parent`.`id_user` = `users`.`id`
+
+
+
+SELECT * FROM `response_parent`  INNER JOIN `users` ON `response_parent`.`id_user` = `users`.`id`
+
+
+
+
+SELECT `id_user`,`id_username` FROM `response_parent`  INNER JOIN `users` ON `response_parent`.`id_user` = `users`.`id`
+=> recupere tout les id_user et les usernames mais ne compte pas
+
+
+
+SELECT COUNT(`id_user`,`id_username`) FROM `response_parent`  INNER JOIN `users` ON `response_parent`.`id_user` = `users`.`id`
+=> marche pas
+
+
+
+###############################################################################################################################
+###############################################################################################################################
+###############################################################################################################################
+
+OK:
+SELECT COUNT(`id_user`) FROM `response_parent` GROUP BY `id_username`
+=> recupere le total de trajet effectuer pour chaque utilisateur mais sans le nom
+
+###############################################################################################################################
+###############################################################################################################################
+###############################################################################################################################
+
+SELECTEUR SAISON :
+<select name="season_user" id="saison_user">
+								<?php
+								//déclaration requete sql
+								$req1 = $db->query('SELECT * FROM saison');
+								$rows = $req1->rowCount();
+								//boucle pour recuperer plusieurs lignes
+								if ($rows > 0) {
+									while ($rows = $req1->fetch()) {
+										?>
+										<option value="<?php echo $date_saison; ?>">
+											<?php echo $rows["date_saison"] ?>
+										</option>
+									<?php
+									}
+								}
+								?>
+							</select>
+              
+
+
+
+
+###############################################################################################################################
+###############################################################################################################################
+###############################################################################################################################
+
+
+
+SELECTEUR USER :
+
+      <select name="choose_user" id="choose_user">
+                    <?php
+                    $req_user = $db->query('SELECT * FROM users');
+                    $row_user = $req_user->rowCount();
+                    
+                    if ($row_user > 0) {
+                        while ($row_user = $req_user->fetch()){
+                            ?>
+                        <option value="<?php echo $row_user["username"] ?>">
+											<?php echo $row_user["username"] ?>
+										</option>
+                            <?php
+                        }
+                    }
+                    ?>
+                    </select>
+
+
+
+
+
+
+
+###############################################################################################################################
+###############################################################################################################################
+###############################################################################################################################
+
+TABLEAU PARTICIPATION/MOIS :
+
+
+
+<?php
+                    $janvier = "";
+                    $sqlJanvier = $db->prepare("SELECT COUNT(reponse='oui') FROM response_parent WHERE jour_event LIKE '%-01-%'");
+                    if ($sqlJanvier->execute(array())) {
+                        $janvier = $sqlJanvier->fetch();
+                    }
+                    ?>
+
+                    <?php
+                    $fevrier = "";
+                    $sqlFevrier = $db->prepare("SELECT COUNT(reponse='oui') FROM response_parent WHERE jour_event LIKE '%-02-%'");
+                    if ($sqlFevrier->execute(array())) {
+                        $fevrier = $sqlFevrier->fetch();
+                    }
+                    ?>
+                    <?php
+                    $mars = "";
+                    $sqlMars = $db->prepare("SELECT COUNT(reponse='oui') FROM response_parent WHERE jour_event LIKE '%-03-%'");
+                    if ($sqlMars->execute(array())) {
+                        $mars = $sqlMars->fetch();
+                    }
+                    ?>
+                    <?php
+                    $avril = "";
+                    $sqlAvril = $db->prepare("SELECT COUNT(reponse='oui') FROM response_parent WHERE jour_event LIKE '%-04-%'");
+                    if ($sqlAvril->execute(array())) {
+                        $avril = $sqlAvril->fetch();
+                    }
+                    ?>
+                    <?php
+                    $mai = "";
+                    $sqlMai = $db->prepare("SELECT COUNT(reponse='oui') FROM response_parent WHERE jour_event LIKE '%-05-%'");
+                    if ($sqlMai->execute(array())) {
+                        $mai = $sqlMai->fetch();
+                    }
+                    ?>
+                    <?php
+                    $juin = "";
+                    $sqlJuin = $db->prepare("SELECT COUNT(reponse='oui') FROM response_parent WHERE jour_event LIKE '%-06-%'");
+                    if ($sqlJuin->execute(array())) {
+                        $juin = $sqlJuin->fetch();
+                    }
+                    ?>
+                    <canvas id="myChart" width="400" height="100"></canvas>
+                    <script>
+                        var ctx = document.querySelector('#myChart');
+                        var myChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin'],
+                                datasets: [{
+                                    label: '',
+                                    data: [ 
+                                        <?php echo $janvier[0];?>,
+                                        <?php echo $fevrier[0];?>,
+                                        <?php echo $mars[0];?>, 
+                                        <?php echo $avril[0];?>,
+                                        <?php echo $mai[0];?>,
+                                        <?php echo $juin[0];?>
+                                    ],
+                                    backgroundColor: [
+                                        'rgb(242, 105, 33)',
+                                        'rgb(249, 164, 63)',
+                                        'rgb(252, 180, 20)',
+                                        'rgb(253, 187, 79)',
+                                        'rgb(242, 105, 33)',
+                                        'rgb(255, 213, 81)'
+                                    ],
+                                    borderColor: [
+                                        'rgb(88, 88, 91)',
+                                        'rgb(88, 88, 91)',
+                                        'rgb(88, 88, 91)',
+                                        'rgb(88, 88, 91)',
+                                        'rgb(88, 88, 91)',
+                                        'rgb(88, 88, 91)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    </script>

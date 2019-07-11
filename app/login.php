@@ -21,7 +21,9 @@
 				<h2>CONNEXION</h2>
 
 				<form method="post" action="login.php">
-					<?php echo display_error(); ?>
+					<div class="info_error">
+						<?php echo display_error(); ?>
+					</div>
 					<div class="input_login">
 						<label>IDENTIFIANT</label>
 						<input class="input_log" type="text" name="username">
@@ -30,7 +32,7 @@
 						<label>MOT DE PASSE</label>
 						<input class="input_log" type="password" name="password">
 					</div>
-						<button type="submit" class="btn" name="login_btn">CONNEXION</button>
+					<button type="submit" class="btn" name="login_btn">CONNEXION</button>
 				</form>
 			</div>
 		</div>
