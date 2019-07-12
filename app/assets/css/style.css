@@ -28,6 +28,13 @@
   src: url("../font/oswald/oswald.ttf");
 }
 
+footer {
+  font-family: "lato bold";
+  color: #404041;
+  font-size: 0.7em;
+  text-align: right;
+}
+
 .infos_connec {
   background-color: #e6e7e8;
   height: 10vh;
@@ -118,18 +125,24 @@
   color: white;
 }
 
-.body .main .side_bar nav ul {
-  margin: 3rem 0 0 0;
-  padding: 0;
-}
-
-.body .main .side_bar nav ul li {
+.body .main .side_bar .profil .effect-4 {
   list-style: none;
   padding-top: 25px;
   padding-bottom: 25px;
 }
 
-.body .main .side_bar nav ul li a {
+.body .main .side_bar .profil .effect-4 ul {
+  margin: 3rem 0 0 0;
+  padding: 0;
+}
+
+.body .main .side_bar .profil .effect-4 ul li {
+  list-style: none;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+.body .main .side_bar .profil .effect-4 ul li a {
   text-decoration: none;
   font-family: "lato";
   color: white;
@@ -146,11 +159,7 @@
   text-align: center;
   margin-right: auto;
   margin-left: auto;
-}
-
-.body .main .side_bar nav ul li .underline {
-  height: 2px;
-  border-bottom: solid white 1px;
+  text-transform: uppercase;
 }
 
 .body .main .contains_top {
@@ -223,6 +232,23 @@
   font-size: 1.1em;
 }
 
+.body .main .contains_top .total_match {
+  font-family: "lato bold";
+  color: #404041;
+  font-size: 1.2em;
+  text-align: center;
+  background-color: white;
+  -webkit-box-shadow: 5px 5px 15px 0px #cfcfcf;
+          box-shadow: 5px 5px 15px 0px #cfcfcf;
+  padding: 1rem;
+}
+
+.body .main .contains_top .total_match h4 {
+  font-family: "lato bold";
+  color: #f05a28;
+  font-size: 1.1em;
+}
+
 .body .main .contains_graph {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -237,20 +263,25 @@
 }
 
 .body .main .contains_graph .tableau_top {
-  padding: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.body .main .contains_graph .tableau_top .bg_tableau {
   background-color: white;
   -webkit-box-shadow: 5px 5px 15px 0px #cfcfcf;
           box-shadow: 5px 5px 15px 0px #cfcfcf;
+  padding: 2rem;
 }
 
-.body .main .contains_graph .tableau_top h4 {
+.body .main .contains_graph .tableau_top .bg_tableau h4 {
   font-family: "lato bold";
   color: #f05a28;
   font-size: 1.3em;
   text-align: center;
 }
 
-.body .main .contains_graph .tableau_top ul {
+.body .main .contains_graph .tableau_top .bg_tableau ul {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -264,11 +295,11 @@
   padding: 0;
 }
 
-.body .main .contains_graph .tableau_top ul .underline {
+.body .main .contains_graph .tableau_top .bg_tableau ul .underline {
   border-bottom: #dbdbdb 1px solid;
 }
 
-.body .main .contains_graph .tableau_top ul li {
+.body .main .contains_graph .tableau_top .bg_tableau ul li {
   text-align: center;
   list-style: none;
   font-family: "lato";
@@ -288,11 +319,11 @@
           flex-direction: row;
 }
 
-.body .main .contains_graph .tableau_top ul .entete {
+.body .main .contains_graph .tableau_top .bg_tableau ul .entete {
   font-family: "lato bold";
 }
 
-.body .main .contains_graph .tableau_top ul .nb_joueur {
+.body .main .contains_graph .tableau_top .bg_tableau ul .nb_joueur {
   text-align: center;
   list-style: none;
   font-family: "lato bold";
@@ -301,10 +332,63 @@
   margin: 0.5rem auto 0.5rem auto;
 }
 
-.body .main .contains_graph .graph_bar #myChart {
+.body .main .contains_graph .graph_bar .bg_graph_bar {
+  padding: 2rem;
   background-color: white;
   -webkit-box-shadow: 5px 5px 15px 0px #cfcfcf;
           box-shadow: 5px 5px 15px 0px #cfcfcf;
+}
+
+.body .main .contains_graph .graph_bar .bg_graph_bar h4 {
+  text-align: center;
+  font-family: "lato bold";
+  color: #f05a28;
+  font-size: 1.3em;
+}
+
+.body .main .contains_camembert {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  margin: 2rem 5px 2rem 5px;
+}
+
+.body .main .contains_camembert .camembert_un {
+  margin-right: 7px;
+  width: 49%;
+  background-color: white;
+  -webkit-box-shadow: 5px 5px 15px 0px #cfcfcf;
+          box-shadow: 5px 5px 15px 0px #cfcfcf;
+  padding: 2rem 0 2rem 0;
+  color: #333;
+}
+
+.body .main .contains_camembert .camembert_un h4 {
+  text-align: center;
+  font-family: "lato bold";
+  color: #f05a28;
+  font-size: 1.3em;
+}
+
+.body .main .contains_camembert .camembert_deux {
+  margin-left: 7px;
+  width: 49%;
+  background-color: white;
+  -webkit-box-shadow: 5px 5px 15px 0px #cfcfcf;
+          box-shadow: 5px 5px 15px 0px #cfcfcf;
+  padding: 2rem 0 2rem 0;
+  color: #333;
+}
+
+.body .main .contains_camembert .camembert_deux h4 {
+  text-align: center;
+  font-family: "lato bold";
+  color: #f05a28;
+  font-size: 1.3em;
 }
 
 .bg_login {

@@ -46,7 +46,7 @@ if (isset($_GET['logout'])) {
                                 <li><a href="/admin/home.php">HOME</a></li>
                                 <div class="underline"></div>
 
-                                <li><a href="/admin/notif.php">NOTIFICATION</a></li>
+                                <li><a href="/admin/notifs.php">NOTIFICATION</a></li>
                                 <div class="underline"></div>
 
                                 <li><a href="/admin/events.php">CALENDRIER</a></li>

@@ -28,6 +28,13 @@
   src: url("../font/oswald/oswald.ttf");
 }
 
+footer {
+  font-family: "lato bold";
+  color: #404041;
+  font-size: 0.7em;
+  text-align: right;
+}
+
 // ##########################################################
 // ##########################################################
 //                        NAV TOP
@@ -96,29 +103,32 @@
           font-family: "lato light";
           color: white;
         }
-      }
-      nav ul {
-        margin: 3rem 0 0 0;
-        padding: 0;
-
-        li {
+        .effect-4 {
           list-style: none;
           padding-top: 25px;
           padding-bottom: 25px;
-          a {
-            text-decoration: none;
-            font-family: "lato";
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            margin-right: auto;
-            margin-left: auto;
-          }
-          .underline {
-            height: 2px;
-            border-bottom: solid white 1px;
+
+          ul {
+            margin: 3rem 0 0 0;
+            padding: 0;
+
+            li {
+              list-style: none;
+              padding-top: 25px;
+              padding-bottom: 25px;
+              a {
+                text-decoration: none;
+                font-family: "lato";
+                color: white;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                margin-right: auto;
+                margin-left: auto;
+                text-transform: uppercase;
+              }
+            }
           }
         }
       }
@@ -175,6 +185,20 @@
         box-shadow: 5px 5px 15px 0px #cfcfcf;
         padding: 1rem;
       }
+      .total_match {
+        h4 {
+          font-family: "lato bold";
+          color: #f05a28;
+          font-size: 1.1em;
+        }
+        font-family: "lato bold";
+        color: #404041;
+        font-size: 1.2em;
+        text-align: center;
+        background-color: white;
+        box-shadow: 5px 5px 15px 0px #cfcfcf;
+        padding: 1rem;
+      }
     }
     .contains_graph {
       display: flex;
@@ -182,54 +206,98 @@
       justify-content: space-between;
 
       .tableau_top {
-        h4 {
-          font-family: "lato bold";
-          color: #f05a28;
-          font-size: 1.3em;
-          text-align: center;
-        }
-        padding: 2rem;
-        background-color: white;
-        box-shadow: 5px 5px 15px 0px #cfcfcf;
-
-        ul {
-          display: flex;
-          justify-content: space-between;
-          flex-direction: column;
-          padding: 0;
-          .underline {
-            border-bottom: rgb(219, 219, 219) 1px solid;
-          }
-          li {
+        margin: 0;
+        padding: 0;
+        .bg_tableau {
+          background-color: white;
+          box-shadow: 5px 5px 15px 0px #cfcfcf;
+          padding: 2rem;
+          h4 {
+            font-family: "lato bold";
+            color: #f05a28;
+            font-size: 1.3em;
             text-align: center;
-            list-style: none;
-            font-family: "lato";
-            color: #404041;
-            font-size: 1.2em;
-            margin-bottom: 0.5rem;
-            margin-top: 0.5rem;
+          }
+          ul {
             display: flex;
             justify-content: space-between;
-            flex-direction: row;
-          }
-          .entete {
-            font-family: "lato bold";
-          }
-          .nb_joueur {
-            text-align: center;
-            list-style: none;
-            font-family: "lato bold";
-            color: #404041;
-            font-size: 0.8em;
-            margin: 0.5rem auto 0.5rem auto;
+            flex-direction: column;
+            padding: 0;
+            .underline {
+              border-bottom: rgb(219, 219, 219) 1px solid;
+            }
+            li {
+              text-align: center;
+              list-style: none;
+              font-family: "lato";
+              color: #404041;
+              font-size: 1.2em;
+              margin-bottom: 0.5rem;
+              margin-top: 0.5rem;
+              display: flex;
+              justify-content: space-between;
+              flex-direction: row;
+            }
+            .entete {
+              font-family: "lato bold";
+            }
+            .nb_joueur {
+              text-align: center;
+              list-style: none;
+              font-family: "lato bold";
+              color: #404041;
+              font-size: 0.8em;
+              margin: 0.5rem auto 0.5rem auto;
+            }
           }
         }
       }
-
       .graph_bar {
-        #myChart {
+        .bg_graph_bar {
+          padding: 2rem;
           background-color: white;
           box-shadow: 5px 5px 15px 0px #cfcfcf;
+          h4 {
+            text-align: center;
+            font-family: "lato bold";
+            color: #f05a28;
+            font-size: 1.3em;
+          }
+        }
+      }
+    }
+    .contains_camembert {
+      display: flex;
+      flex-direction: row;
+      // justify-content: space-between;
+      margin: 2rem 5px 2rem 5px;
+      // width: 100%;
+      .camembert_un {
+        margin-right: 7px;
+        width: 49%;
+        background-color: white;
+        box-shadow: 5px 5px 15px 0px #cfcfcf;
+        padding: 2rem 0 2rem 0;
+        color: #333;
+        h4 {
+          text-align: center;
+          font-family: "lato bold";
+          color: #f05a28;
+          font-size: 1.3em;
+        }
+      }
+      .camembert_deux {
+        margin-left: 7px;
+        width: 49%;
+        background-color: white;
+        box-shadow: 5px 5px 15px 0px #cfcfcf;
+        padding: 2rem 0 2rem 0;
+        color: #333;
+        h4 {
+          text-align: center;
+          font-family: "lato bold";
+          color: #f05a28;
+          font-size: 1.3em;
         }
       }
     }
