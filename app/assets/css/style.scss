@@ -179,10 +179,52 @@
     .contains_graph {
       display: flex;
       flex-direction: row;
-          // .tableau_top {
+      justify-content: space-between;
 
-          // }
+      .tableau_top {
+        h4 {
+          font-family: "lato bold";
+          color: #f05a28;
+          font-size: 1.3em;
+          text-align: center;
+        }
+        padding: 2rem;
+        background-color: white;
+        box-shadow: 5px 5px 15px 0px #cfcfcf;
 
+        ul {
+          display: flex;
+          justify-content: space-between;
+          flex-direction: column;
+          padding: 0;
+          .underline {
+            border-bottom: rgb(219, 219, 219) 1px solid;
+          }
+          li {
+            text-align: center;
+            list-style: none;
+            font-family: "lato";
+            color: #404041;
+            font-size: 1.2em;
+            margin-bottom: 0.5rem;
+            margin-top: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+          }
+          .entete {
+            font-family: "lato bold";
+          }
+          .nb_joueur {
+            text-align: center;
+            list-style: none;
+            font-family: "lato bold";
+            color: #404041;
+            font-size: 0.8em;
+            margin: 0.5rem auto 0.5rem auto;
+          }
+        }
+      }
 
       .graph_bar {
         #myChart {

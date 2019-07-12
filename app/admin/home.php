@@ -120,7 +120,7 @@ if (isset($_GET['logout'])) {
                         <div class="top_un">
                             <h4>TOTAL DES VOLONTAIRES</h4>
                             <?php
-                           
+
                             $infoCompte = "";
                             $connectCompteur = $db->prepare("SELECT COUNT(*) FROM response_parent WHERE reponse ='oui' ");
                             if ($connectCompteur->execute(array())) {
@@ -133,102 +133,109 @@ if (isset($_GET['logout'])) {
                     </div>
                 </div>
                 <div class="row contains_graph">
-                    <div class="tableau_top">
-
-
-
-                        </div>
-                <div class="graph_bar">
-                    <select name="choose_user" id="choose_user">
-                    <?php
-                    $req_user = $db->query('SELECT * FROM users');
-                    $row_user = $req_user->rowCount();
-                    
-                    if ($row_user > 0) {
-                        while ($row_user = $req_user->fetch()){
-                            ?>
-                        <option value="<?php echo $row_user["username"] ?>">
-											<?php echo $row_user["username"];?>
-                                        </option>
-                            <?php
-                        } 
-                    }
-                    ?>
-                    </select>
-
-                    <?php
-                    // $janvier = "";
-                    // $sqlJanvier = $db->prepare("SELECT COUNT(reponse='oui') FROM response_parent WHERE id_user='$choose_user'");
-                    // if ($sqlJanvier->execute(array())) {
-                    //     $janvier = $sqlJanvier->fetch();
-                    // }
-                    // $graph = 0;
-                    // for ($i = 0; $i < sizeof($result_graph); $i++) {
-                    // $graph += $result_graph[$i]["places_necessaires"];
-                    // echo ($result_graph[$i]['places_necessaires'] . ',');
-                    // } ?>
-                  
-
-
-
-
-
-
-                    <canvas id="myChart" width="400" height="100"></canvas>
-                    <script>
+                    <div class="tableau_top col-3">
                         <?php
-                    $req_user = $db->query('SELECT * FROM users');
-                    $row_user = $req_user->rowCount();
-                    
-                    if ($row_user > 0) {
-                        while ($row_user = $req_user->fetch()){
-                            ?>
-                        var ctx = document.querySelector('#myChart');
-                        var myChart = new Chart(ctx, {
-                            type: 'bar',
-                            data: {
-                                labels: ['<?php echo $row_user["username"];?>', '<?php echo $row_user["username"];?>', 'Mars', 'Avril', 'Mai', 'Juin'],
-                                datasets: [{
-                                    label: '',
-                                    data: [ 
-                                    
-                                    ],
-                                    backgroundColor: [
-                                        'rgb(242, 105, 33)',
-                                        'rgb(249, 164, 63)',
-                                        'rgb(252, 180, 20)',
-                                        'rgb(253, 187, 79)',
-                                        'rgb(242, 105, 33)',
-                                        'rgb(255, 213, 81)'
-                                    ],
-                                    borderColor: [
-                                        'rgb(88, 88, 91)',
-                                        'rgb(88, 88, 91)',
-                                        'rgb(88, 88, 91)',
-                                        'rgb(88, 88, 91)',
-                                        'rgb(88, 88, 91)',
-                                        'rgb(88, 88, 91)'
-                                    ],
-                                    borderWidth: 1
-                                }]
-                            },
-                            options: {
-                                scales: {
-                                    yAxes: [{
-                                        ticks: {
-                                            beginAtZero: true
-                                        }
-                                    }]
+                        $resultatDate = "";
+                        $theDate = $db->prepare("SELECT jour_event FROM response_parent GROUP BY jour_event DESC ");
+                        if ($theDate->execute(array())) {
+                            $resultatDate  = $theDate->fetch();
+                            $theDate = $resultatDate["jour_event"];
+                        }
+
+                        $volontaire = "";
+                        $theVolontaire = $db->prepare("SELECT * FROM response_parent WHERE reponse='oui' AND jour_event='$resultatDate[0]' ");
+                        if ($theVolontaire->execute(array())) {
+                            $volontaire  = $theVolontaire->rowCount();
+                           
+                        }  ?>
+
+                        <h4>VOLONTAIRES POUR LE <?php echo $resultatDate[0]; ?></h4>
+                        <ul>
+                            <li class="entete">NOM <span> PLACES</span></li>
+                            <?php
+                            //boucle pour recuperer plusieurs lignes
+                            if ($volontaire > 0) {
+                                while ($volontaire = $theVolontaire->fetch()) {
+                                    ?>
+                                    <li><?php echo $volontaire[2]; ?> <span><?php echo $volontaire[4]; ?>  </span></li>
+                                    <div class="underline"> </div>
+                                <?php
                                 }
                             }
-                        });
-                        <?php
-                        } 
-                    }
-                    ?>
-                    </script>
+                            ?>
+                            <?php
+                             $totalPlace = "";
+                            $theTotalPlace = $db->prepare("SELECT SUM(`place`) FROM `response_parent` WHERE `jour_event`='$resultatDate[0]' ");
+                            if ($theTotalPlace->execute(array())) {
+                                $totalPlace  = $theTotalPlace->fetch();
+                           
+                        }  ?>
+
+                            <li class="entete">TOTAL  <span><?php echo $totalPlace[0]; ?></span></li>
+
+                            <?php
+                             $placeNecessaire = "";
+                            $thePlace = $db->prepare("SELECT `places_dispo` FROM planning ORDER BY `events` DESC");
+                            if ($thePlace->execute(array())) {
+                                $placeNecessaire  = $thePlace->fetch();
+                           
+                        }  ?>
+                            <li class="nb_joueur">(NOMBRE DE JOUEUR PRÉVU :<?php echo $placeNecessaire[0];?>)</li>
+                        </ul>
                     </div>
-            </div></div>
+                    <div class="graph_bar col-9">
+                        <canvas id="myChart"></canvas>
+                        
+                        <script>
+                            var ctx = document.querySelector('#myChart');
+                            var myChart = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin'],
+                                    datasets: [{
+                                        label: '',
+                                        data: [
+                                            12,
+                                            6,
+                                            5,
+                                            5,
+                                            14,
+                                            8
+
+                                        ],
+                                        backgroundColor: [
+                                            'rgb(242, 105, 33)',
+                                            'rgb(249, 164, 63)',
+                                            'rgb(252, 180, 20)',
+                                            'rgb(253, 187, 79)',
+                                            'rgb(242, 105, 33)',
+                                            'rgb(255, 213, 81)'
+                                        ],
+                                        borderColor: [
+                                            'rgb(88, 88, 91)',
+                                            'rgb(88, 88, 91)',
+                                            'rgb(88, 88, 91)',
+                                            'rgb(88, 88, 91)',
+                                            'rgb(88, 88, 91)',
+                                            'rgb(88, 88, 91)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

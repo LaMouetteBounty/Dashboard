@@ -14,13 +14,23 @@ SELECT * FROM `response_parent`  INNER JOIN `users` ON `response_parent`.`id_use
 
 
 SELECT `id_user`,`id_username` FROM `response_parent`  INNER JOIN `users` ON `response_parent`.`id_user` = `users`.`id`
-=> recupere tout les id_user et les usernames mais ne compte pas
+=> recupere les id_user et les usernames mais ne compte pas
 
 
 
 SELECT COUNT(`id_user`,`id_username`) FROM `response_parent`  INNER JOIN `users` ON `response_parent`.`id_user` = `users`.`id`
 => marche pas
 
+
+SELECT `id_user`,`id_username` FROM `response_parent` INNER JOIN `users` ON `response_parent`.`id_user` = `users`.`id` GROUP BY `id_user`
+
+
+###############################################################################################################################
+###############################################################################################################################
+###############################################################################################################################
+
+
+SELECT COUNT(`id_user`),`id_username` FROM `response_parent` GROUP BY `id_username`
 
 
 ###############################################################################################################################

@@ -231,6 +231,74 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.body .main .contains_graph .tableau_top {
+  padding: 2rem;
+  background-color: white;
+  -webkit-box-shadow: 5px 5px 15px 0px #cfcfcf;
+          box-shadow: 5px 5px 15px 0px #cfcfcf;
+}
+
+.body .main .contains_graph .tableau_top h4 {
+  font-family: "lato bold";
+  color: #f05a28;
+  font-size: 1.3em;
+  text-align: center;
+}
+
+.body .main .contains_graph .tableau_top ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 0;
+}
+
+.body .main .contains_graph .tableau_top ul .underline {
+  border-bottom: #dbdbdb 1px solid;
+}
+
+.body .main .contains_graph .tableau_top ul li {
+  text-align: center;
+  list-style: none;
+  font-family: "lato";
+  color: #404041;
+  font-size: 1.2em;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.body .main .contains_graph .tableau_top ul .entete {
+  font-family: "lato bold";
+}
+
+.body .main .contains_graph .tableau_top ul .nb_joueur {
+  text-align: center;
+  list-style: none;
+  font-family: "lato bold";
+  color: #404041;
+  font-size: 0.8em;
+  margin: 0.5rem auto 0.5rem auto;
 }
 
 .body .main .contains_graph .graph_bar #myChart {

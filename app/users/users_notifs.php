@@ -100,13 +100,15 @@ if (!isLoggedIn()) {
                             ?>
                             <?php
                             $lastRow = "";
-                            $session_id = $_SESSION['user']['username'];
+                            $session_id = $_SESSION['user']['id'];
                             $LastStmt = $db->prepare("SELECT * FROM response_parent
                             WHERE id_user='$session_id' AND jour_event ='$row[1]'");
                             if ($LastStmt->execute(array())) {
-                                $lastRow = $LastStmt->fetch()
+                                $lastRow = $LastStmt->fetch();
                                 ?>
+                            
                                 <h4>RÉPONSE ENREGISTRÉ</h4>
+                                
                                 <p> <span>Date du match :</span> <?php echo $lastRow[1]; ?>  </p>
                                 <p> <span>Réponse :</span> <?php echo $lastRow[3]; ?> </p>
                                 <p> <span>Nombre de joueurs :</span> <?php echo $lastRow[4]; ?> </p>
@@ -117,7 +119,7 @@ if (!isLoggedIn()) {
                         <div class="formulaire_notif_user offset-1 col-6">
                             <form action="users_notifs.php" method="post">
 
-                                <div class="">
+                                <div class="d-none">
                                         <input type="text" class="jour_event" name="jour_event" value="<?php echo $row[1]; ?>" readonly>
                                         <input type="text" class="id_username" name="id_username" value="<?php echo $_SESSION['user']['username']; ?>" readonly>
                                         <input type="text" class="id_user" name="id_user" value="<?php echo $_SESSION['user']['id']; ?>" readonly>
