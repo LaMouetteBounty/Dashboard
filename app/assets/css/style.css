@@ -35,6 +35,76 @@ footer {
   text-align: right;
 }
 
+.side_bar {
+  background-image: url("../maquettes/img/bg_sidebar.jpg");
+  width: 25%;
+}
+
+.side_bar .profil {
+  font-family: "lato bold";
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 10vh;
+}
+
+.side_bar .profil .type_user {
+  font-family: "lato light";
+  color: white;
+}
+
+.side_bar .profil nav {
+  list-style: none;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+.side_bar .profil nav ul {
+  margin: 3rem 0 0 0;
+  padding: 0;
+}
+
+.side_bar .profil nav ul li {
+  list-style: none;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+.side_bar .profil nav ul li a {
+  text-decoration: none;
+  font-family: "lato";
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+  text-transform: uppercase;
+}
+
+.side_bar .profil nav ul li a:hover {
+  color: #888;
+}
+
 .infos_connec {
   background-color: #e6e7e8;
   height: 10vh;
@@ -96,12 +166,12 @@ footer {
           flex-direction: row;
 }
 
-.body .main .side_bar {
+.body .main .side_bar_home {
   background-image: url("../maquettes/img/bg_sidebar.jpg");
   width: 25%;
 }
 
-.body .main .side_bar .profil {
+.body .main .side_bar_home .profil {
   font-family: "lato bold";
   color: white;
   display: -webkit-box;
@@ -120,29 +190,29 @@ footer {
   margin-top: 10vh;
 }
 
-.body .main .side_bar .profil .type_user {
+.body .main .side_bar_home .profil .type_user {
   font-family: "lato light";
   color: white;
 }
 
-.body .main .side_bar .profil .effect-4 {
+.body .main .side_bar_home .profil nav {
   list-style: none;
   padding-top: 25px;
   padding-bottom: 25px;
 }
 
-.body .main .side_bar .profil .effect-4 ul {
+.body .main .side_bar_home .profil nav ul {
   margin: 3rem 0 0 0;
   padding: 0;
 }
 
-.body .main .side_bar .profil .effect-4 ul li {
+.body .main .side_bar_home .profil nav ul li {
   list-style: none;
   padding-top: 25px;
   padding-bottom: 25px;
 }
 
-.body .main .side_bar .profil .effect-4 ul li a {
+.body .main .side_bar_home .profil nav ul li a {
   text-decoration: none;
   font-family: "lato";
   color: white;
@@ -160,6 +230,10 @@ footer {
   margin-right: auto;
   margin-left: auto;
   text-transform: uppercase;
+}
+
+.body .main .side_bar_home .profil nav ul li a:hover {
+  color: #888;
 }
 
 .body .main .contains_top {
@@ -465,9 +539,13 @@ footer {
 }
 
 .bg_login .container .main_login .btn:hover {
-  background-color: gray;
+  background-color: #f05a28;
   -webkit-transition-duration: 0.5s;
           transition-duration: 0.5s;
+}
+
+.body .side_bar {
+  height: 100vh;
 }
 
 .body .titre_saison h3 {
@@ -519,6 +597,12 @@ footer {
   background-color: #f05a28;
   color: white;
   width: 100%;
+}
+
+.body .form_saison .creation_saison .btn:hover {
+  background-color: #333;
+  -webkit-transition-duration: 0.5s;
+          transition-duration: 0.5s;
 }
 
 .body .gestion_saison {
@@ -606,6 +690,12 @@ footer {
   background-color: #f05a28;
   color: white;
   width: 100%;
+}
+
+.body .main_notifs .add_events .formulaire_notif .btn:hover {
+  background-color: #333;
+  -webkit-transition-duration: 0.5s;
+          transition-duration: 0.5s;
 }
 
 .body .main_notifs .add_events .dernier_match {
@@ -730,7 +820,7 @@ footer {
 }
 
 .body_createUser .bg_createUser .container .main_createUser .btn:hover {
-  background-color: gray;
+  background-color: #f05a28;
   -webkit-transition-duration: 0.5s;
           transition-duration: 0.5s;
 }
@@ -870,6 +960,12 @@ footer {
   width: 100%;
 }
 
+.formulaire_notif_user .btn:hover {
+  background-color: #333;
+  -webkit-transition-duration: 0.5s;
+          transition-duration: 0.5s;
+}
+
 .prochain_match {
   color: #404041;
 }
@@ -879,6 +975,7 @@ footer {
   font-size: 1.2em;
   font-family: "lato bold";
   margin-bottom: 1rem;
+  color: #404041;
 }
 
 .prochain_match p {
@@ -888,5 +985,98 @@ footer {
 .prochain_match p span {
   font-family: "lato bold";
   color: #f05a28;
+}
+
+.main_params h3 {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 2.5em;
+  margin-bottom: 1rem;
+  font-family: "anton";
+}
+
+.main_params .content_params {
+  margin-top: 2rem;
+  padding: 2rem 6rem 4rem 6rem;
+  background-color: white;
+  -webkit-box-shadow: 5px 5px 15px 0px #cfcfcf;
+          box-shadow: 5px 5px 15px 0px #cfcfcf;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.main_params .content_params .info_user h4 {
+  padding-top: 2rem;
+  font-size: 1.2em;
+  font-family: "lato bold";
+  margin-bottom: 1rem;
+}
+
+.main_params .content_params .info_user p {
+  margin-top: 2rem;
+  font-family: "lato bold";
+  color: #f05a28;
+}
+
+.main_params .content_params .info_user p span {
+  font-family: "lato";
+  color: #404041;
+}
+
+.main_params .content_params .changeMp {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: left;
+}
+
+.main_params .content_params .changeMp .input_mp {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.main_params .content_params .changeMp .input_mp h4 {
+  padding-top: 2rem;
+  font-size: 1.2em;
+  font-family: "lato bold";
+  margin-bottom: 1rem;
+}
+
+.main_params .content_params .changeMp .input_mp input {
+  height: 33px;
+  width: 100%;
+}
+
+.main_params .content_params .changeMp .input_mp label {
+  margin-top: 2rem;
+  font-family: "lato bold";
+  color: #f05a28;
+}
+
+.main_params .content_params .changeMp .btn {
+  margin-top: 2rem;
+  font-family: "lato bold";
+  background-color: #f05a28;
+  color: white;
+  width: 100%;
+}
+
+.main_params .content_params .changeMp .btn:hover {
+  background-color: #333;
+  -webkit-transition-duration: 0.5s;
+          transition-duration: 0.5s;
 }
 /*# sourceMappingURL=style.css.map */

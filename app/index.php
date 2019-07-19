@@ -18,12 +18,13 @@ if (!isLoggedIn()) {
     <title>Accueil</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 </head>
 
 <body class="body">
     <div class="container-fluid main">
 
-        <div class="side_bar col-2">
+        <div class="side_bar_home col-2">
             <div class="container">
                 <div class="row">
                     <div class="profil">
@@ -37,19 +38,12 @@ if (!isLoggedIn()) {
                             <ul>
 
                                 <li><a href="index.php">HOME</a></li>
-                               
 
                                 <li><a href="/users/users_notifs.php">NOTIFICATION</a></li>
-                                
 
                                 <li><a href="/users/users_events.php">CALENDRIER</a></li>
-                                
 
-                                <li><a href="/users/users_saisons.php">SAISONS</a></li>
-                               
-
-                                <li><a href="/users/users_stats.php">STATISTIQUES</a></li>
-                                
+                                <li><a href="/users/users_param.php">PARAMÈTRES</a></li>
 
                             </ul>
                         </nav>
@@ -64,7 +58,7 @@ if (!isLoggedIn()) {
                         <?php echo $_SESSION['user']['username']; ?>
                         (<?php echo ucfirst($_SESSION['user']['user_type']); ?>)
                     <?php endif ?>
-                    <img src="../assets/maquettes/bkc_dashboard.png" width="40px">
+                    <img src="../assets/maquettes/favicon_bkc.png" width="30px">
                     <div class="dropdown inline-block">
                         <img src="../assets/img/icons/arrow.png" width="20px">
                         <ul class="dropdown-menu absolute hidden">
@@ -73,23 +67,25 @@ if (!isLoggedIn()) {
                     </div>
                 </div>
             </div>
-             <!-- CONTENUE -->
-             <div class="container">
+            <!-- CONTENUE -->
+            <div class="container">
                 <div class="row">
                     <!-- 3 CONTAINS TOP -->
                     <div class="contains_top">
-                        <!-- NOMBRE D'INSCRIT SUR LA PLATEFORME -->
-                        <div class="nb_inscrit">
-                            <h4> NOMBRE D'UTILISATEUR</h4>
+
+                        <!-- TOTAL DES MATCHS -->
+                        <div class="total_match">
+                            <h4>TOTAL DES MATCHS</h4>
                             <?php
-                            $utilisateur = "";
-                            $connect = $db->prepare("SELECT COUNT(*) FROM users WHERE user_type='user'");
-                            if ($connect->execute(array())) {
-                                $utilisateur = $connect->fetch();
-                                echo $utilisateur[0];
+                            $totalMatch = "";
+                            $theMatch = $db->prepare("SELECT COUNT(*) FROM `planning` WHERE `events` LIKE '2019%'");
+                            if ($theMatch->execute(array())) {
+                                $totalMatch = $theMatch->fetch();
+                                echo $totalMatch[0];
                             }
                             ?>
                         </div>
+
                         <!-- DATE DU DERNIER MATCH -->
                         <div class="last_match">
                             <h4>PROCHAIN MATCH</h4>
@@ -107,27 +103,30 @@ if (!isLoggedIn()) {
                             }
                             ?>
                         </div>
-                        <!-- TOTAL DES MATCHS -->
-                        <div class="total_match">
-                            <h4>TOTAL DES MATCHS</h4>
+                        <!-- NOMBRE D'INSCRIT SUR LA PLATEFORME -->
+                        <div class="nb_inscrit">
+                        <h4>TOTAL DES TRAJETS</h4>
                             <?php
-                            $totalMatch = "";
-                            $theMatch = $db->prepare("SELECT COUNT(*) FROM `planning` WHERE `events` LIKE '2019%'");
-                            if ($theMatch->execute(array())) {
-                                $totalMatch = $theMatch->fetch();
-                                echo $totalMatch[0];
+
+                            $infoCompte = "";
+                            $connectCompteur = $db->prepare("SELECT COUNT(*) FROM response_parent WHERE reponse ='oui'");
+                            if ($connectCompteur->execute(array())) {
+                                $infoCompte  = $connectCompteur->fetch();
+                                echo $infoCompte[0];
                             }
                             ?>
                         </div>
                         <!-- TOTAL DE REPONSES POSITIVES -->
                         <div class="top_un">
                             <h4>TOTAL DES TRAJETS</h4>
+
                             <?php
+                            $name = $_SESSION['user']['username'];
 
                             $infoCompte = "";
-                            $connectCompteur = $db->prepare("SELECT COUNT(*) FROM response_parent WHERE reponse ='oui' ");
+                            $connectCompteur = $db->prepare("SELECT COUNT(*) FROM response_parent WHERE reponse ='oui' AND id_username='$name' ");
                             if ($connectCompteur->execute(array())) {
-                                $infoCompte  = $connectCompteur->fetch();
+                                $infoCompte = $connectCompteur->fetch();
                                 echo $infoCompte[0];
                             }
                             ?>
@@ -187,71 +186,71 @@ if (!isLoggedIn()) {
                     </div>
                     <div class="graph_bar col-9">
                         <div class="bg_graph_bar">
-                    <h4> TRAJETS EFFECTUÉS PAR PERSONNE </h4>
-                        <?php
-                        $total = "";
-                        $theTotal = $db->prepare("SELECT COUNT(`id_user`) AS total ,`id_username` FROM `response_parent` GROUP BY `id_username` ORDER BY `total` DESC");
-                        if ($theTotal->execute(array())) {
-                            $total  = $theTotal->fetchAll(PDO::FETCH_ASSOC);
-                        }
-
-                        if ($total != false) {
-                            $userList = [];
-                            $totalList = [];
-                            foreach ($total as $row) {
-                                $userList[] = $row['id_username'];
-                                $totalList[] = $row['total'];
+                            <h4> TRAJETS EFFECTUÉS PAR PERSONNE </h4>
+                            <?php
+                            $total = "";
+                            $theTotal = $db->prepare("SELECT COUNT(`id_user`) AS total ,`id_username` FROM `response_parent` GROUP BY `id_username` ORDER BY `total` DESC");
+                            if ($theTotal->execute(array())) {
+                                $total  = $theTotal->fetchAll(PDO::FETCH_ASSOC);
                             }
-                        }
-                        ?>
-                        
-                        <canvas id="myChart"></canvas>
 
-                        <!-- TABLEAU DES PARENTS QUI FONT LE PLUS DE TRAJET X=USERNAME Y=TOTAL DE TRAJET -->
-                        <script>
-                            var userList = '<?php echo implode(',', $userList); ?>';
-                            var totalList = '<?php echo implode(',', $totalList); ?>';
-                            userList = userList.split(',');
-                            totalList = totalList.split(',');
-
-                            var ctx = document.querySelector('#myChart');
-                            var myChart = new Chart(ctx, {
-                                type: 'bar',
-                                data: {
-                                    labels: userList,
-                                    datasets: [{
-                                        label: 'Nombre de trajet effectué',
-                                        data: totalList,
-                                        backgroundColor: [
-                                            'rgb(242, 105, 33)',
-                                            'rgb(249, 164, 63)',
-                                            'rgb(252, 180, 20)',
-                                            'rgb(253, 187, 79)',
-                                            'rgb(242, 105, 33)',
-                                            'rgb(255, 213, 81)'
-                                        ],
-                                        borderColor: [
-                                            'rgb(88, 88, 91)',
-                                            'rgb(88, 88, 91)',
-                                            'rgb(88, 88, 91)',
-                                            'rgb(88, 88, 91)',
-                                            'rgb(88, 88, 91)',
-                                            'rgb(88, 88, 91)'
-                                        ],
-                                        borderWidth: 1
-                                    }]
-                                },
-                                options: {
-                                    scales: {
-                                        yAxes: [{
-                                            ticks: {
-                                                beginAtZero: true
-                                            }
-                                        }]
-                                    }
+                            if ($total != false) {
+                                $userList = [];
+                                $totalList = [];
+                                foreach ($total as $row) {
+                                    $userList[] = $row['id_username'];
+                                    $totalList[] = $row['total'];
                                 }
-                            });
-                        </script>
+                            }
+                            ?>
+
+                            <canvas id="myChart"></canvas>
+
+                            <!-- TABLEAU DES PARENTS QUI FONT LE PLUS DE TRAJET X=USERNAME Y=TOTAL DE TRAJET -->
+                            <script>
+                                var userList = '<?php echo implode(',', $userList); ?>';
+                                var totalList = '<?php echo implode(',', $totalList); ?>';
+                                userList = userList.split(',');
+                                totalList = totalList.split(',');
+
+                                var ctx = document.querySelector('#myChart');
+                                var myChart = new Chart(ctx, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: userList,
+                                        datasets: [{
+                                            label: 'Nombre de trajet effectué',
+                                            data: totalList,
+                                            backgroundColor: [
+                                                'rgb(242, 105, 33)',
+                                                'rgb(249, 164, 63)',
+                                                'rgb(252, 180, 20)',
+                                                'rgb(253, 187, 79)',
+                                                'rgb(242, 105, 33)',
+                                                'rgb(255, 213, 81)'
+                                            ],
+                                            borderColor: [
+                                                'rgb(88, 88, 91)',
+                                                'rgb(88, 88, 91)',
+                                                'rgb(88, 88, 91)',
+                                                'rgb(88, 88, 91)',
+                                                'rgb(88, 88, 91)',
+                                                'rgb(88, 88, 91)'
+                                            ],
+                                            borderWidth: 1
+                                        }]
+                                    },
+                                    options: {
+                                        scales: {
+                                            yAxes: [{
+                                                ticks: {
+                                                    beginAtZero: true
+                                                }
+                                            }]
+                                        }
+                                    }
+                                });
+                            </script>
                         </div>
                         <div class="contains_camembert row">
                             <div class="camembert_un">
@@ -310,7 +309,7 @@ if (!isLoggedIn()) {
                                     }
                                 }
                                 ?>
-                                <h4> TOTAL DES RÉPONSES </h4>
+                                <h4> MATCHS PAR VILLE </h4>
                                 <canvas id="myPieChartTwo"></canvas>
                                 <script>
                                     var lieuList = '<?php echo implode(',', $lieuList); ?>';
@@ -349,8 +348,8 @@ if (!isLoggedIn()) {
                 </div>
             </div>
             <footer>
-            <p> © Léa Boutry </p>
-        </footer>
+                <p> © Léa Boutry </p>
+            </footer>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -20,6 +20,8 @@ $place = "";
 $sendMail = "";
 $id_user = "";
 $date_saison = "";
+$selectMail = "";
+
 // ACTIVER FUNCTION BOUTON
 if (isset($_POST['register_btn'])) {
     register();
@@ -93,8 +95,6 @@ function register()
             $sth->bindParam(':password', $password, PDO::PARAM_STR);
             $sth->bindParam(':date_saison', $date_saison, PDO::PARAM_STR);
             $sth->execute();
-
-            $_SESSION['success']  = "New user successfully created!!";
             header('location: home.php');
         }
     }
@@ -117,17 +117,15 @@ function createSeason()
 
         $sth = $db->prepare($sql);
         $sth->execute();
-        $_SESSION['success']  = "New user successfully created!!";
         header('location: saisons.php');
     }
 
+    // LIASONS ID USER AVEC SAISONS
     $recupUserFor = "SELECT id FROM users";
     $recupUserFor = $db->prepare($recupUserFor);
     $recupUserFor->execute();
     $result = $recupUserFor->fetchAll(PDO::FETCH_ASSOC);
 
-
-    // output data of each row
     foreach ($result as $users => $recupUserFor) {
         $requete = "INSERT INTO users_saison (id_user, id_saison) VALUES(:id_user, :id_saison)";
         $sth_userFor = $db->prepare($requete);
@@ -137,6 +135,7 @@ function createSeason()
     }
 }
 
+// AFFICHAGE DES ERREURS
 function display_error()
 {
     global $errors;
@@ -150,7 +149,7 @@ function display_error()
     }
 }
 
-
+// CONNECTION UTILISTATEUR
 function isLoggedIn()
 {
     if (isset($_SESSION['user'])) {
@@ -160,14 +159,14 @@ function isLoggedIn()
     }
 }
 
-// log user out if logout button clicked
+// DECONNECTION
 if (isset($_GET['logout'])) {
     session_destroy();
     unset($_SESSION['user']);
     header("location: login.php");
 }
 
-// call the login() function if register_btn is clicked
+// BOUTON CONNECTION
 if (isset($_POST['login_btn'])) {
     login();
 }
@@ -177,11 +176,9 @@ function login()
 {
     global $db, $username, $errors;
 
-    // grap form values
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // make sure form is filled properly
     if (empty($username)) {
         array_push($errors, "Le champ identifiant est obligatoire");
     }
@@ -189,7 +186,6 @@ function login()
         array_push($errors, "Le mot de passe est obligatoire");
     }
 
-    // attempt login if no errors on form
     if (count($errors) == 0) {
         $password = md5($password);
 
@@ -198,11 +194,9 @@ function login()
         $sth->execute();
         $results = $db->query($sql);
 
-        // $query = "SELECT * FROM users WHERE username='$username' AND password='$password' LIMIT 1";
-        // $result = $db->query($query);
 
-        if ($results->rowCount() == 1) { // user found
-            // check if user is admin or user
+        if ($results->rowCount() == 1) { // UTILISATEUR TROUVÉ
+            // CHECK SI C'EST ADMIN OU USER
             $logged_in_user = $results->fetch(PDO::FETCH_ASSOC);
 
             if ($logged_in_user['user_type'] == 'admin') {
@@ -222,6 +216,7 @@ function login()
     }
 }
 
+// CONNECTION ADMIN
 function isAdmin()
 {
     if (isset($_SESSION['user']) && $_SESSION['user']['user_type'] == 'admin') {
@@ -235,12 +230,11 @@ function isAdmin()
 // Ajout date d'evenement et recuperation donnees
 function add_date()
 {
-    // ajout de la date de l'evenement
     global $db, $errors;
     $dateEvent = $_POST['date_events'];
     $lieuMatch = $_POST['lieu_events'];
     $dispoEvent = $_POST['dispo_events'];
-    // $sendMail = $_SESSION = ['user']['email'];
+
 
     if (empty($dateEvent)) {
         array_push($errors, "Date non défini");
@@ -252,7 +246,7 @@ function add_date()
         array_push($errors, "Nombre de joueurs non défini");
     }
     if (count($errors) == 0) {
-        // Requete insert mon formulaire dans la table planning
+        // Requete pour formulaire de creation dans la table planning
         $sql = "INSERT INTO planning (events, lieu, places_dispo) 
             VALUES('$dateEvent', '$lieuMatch', '$dispoEvent')";
 
@@ -261,23 +255,61 @@ function add_date()
         $sth->bindParam(':lieu', $lieuMatch, PDO::PARAM_STR);
         $sth->bindParam(':places_dispo', $dispoEvent, PDO::PARAM_STR);
         $sth->execute();
-        $_SESSION['success']  = "New user successfully created!!";
+
+
+//  ENVOI EMAIL
+        $recupMail = "";
+        $theRecupMail = $db->prepare("SELECT `email` FROM `users`");
+        if ($theRecupMail->execute(array())) {
+            $recupMail  = $theRecupMail->fetchAll(PDO::FETCH_ASSOC);
+        }
+        if ($recupMail != false) {
+            $mailList = [];
+            foreach ($recupMail as $row) {
+                $mailList[] = $row['email'];
+            }
+        }
+        $email_array = implode(',', $mailList);
+        $to      =  $email_array;
+        $subject = 'Nouveau match';
+
+        $message = "";
+        $message .= ' 
+        <html>
+        <body bgcolor="#e6e7e8">
+        <h1 style="font-family:anton; text-align: center; padding-top: 70px; font-size: 2.5em; margin:0;"> NOUVEAU MATCH </h1>
+        
+        
+        <p style="font-family: lato; font-size: 1em; text-align: center; padding-top: 40px; padding-bottom:70px;"> 
+        Un nouveau match auras lieu ce week-end, <br> 
+        vous avez la possibilité de vous porter volontaire <br>
+        pour transporter les joueurs jusqu\'au lieu de rendez-vous. <br> 
+        Pour répondre à cette demande, merci de vous connecter <br>
+        sur votre compte à l\'adresse : <br>
+        <a class="lien_site" href="http://localhost:8080/login.php" style="font-family: lato; font-weight: 700; font-size: 1.5em; text-align: center; text-decoration: none; color: black; ">www.bkc.fr</a>
+        <br>
+        <p style="font-family: lato; font-size: .6em; padding-top: 40px; padding-bottom:70px; padding-left:20px">Ceci est un email automatique, merci de ne pas répondre à cette adresse.</p>
+        </p>
+        </body>
+        </html>
+        ';
+        // recupere adresse admin
+        $recupMailAdmin = "";
+        $theRecupMailAdmin = $db->prepare("SELECT `email` FROM `users` WHERE `user_type`='admin'");
+        if ($theRecupMailAdmin->execute()){
+            $recupMailAdmin = $theRecupMailAdmin->fetch();
+        }
+       
+        $headers[] = 'From:' .$recupMailAdmin[0];
+        $headers[] = 'MIME-Version: 1.0';
+        $headers[] = 'Content-type: text/html; charset=UTF-8';
+
+        mail($to, $subject, $message,  implode("\r\n", $headers));
         header('location: notifs.php');
     }
-
-    // $recupMail = "SELECT email FROM users";
-    // $recupMail = $db->prepare($recupMail);
-    // $recupMail->execute();
-    // $resultMail = $recupMail->fetchAll(PDO::FETCH_ASSOC);
-
-    // foreach ($resultMail as $users => $sendMail) {
-    //     // Le message
-    //     $message = "TEST MAIL";
-    //     // Envoi du mail
-    //     mail('4a29d70f1fa597-fcd013@inbox.mailtrap.io', 'Mon Sujet', $message);
-    // }
 }
 
+// Reponse user -> bdd
 function reponse()
 {
     global $db, $errors;
@@ -288,6 +320,7 @@ function reponse()
     $place = $_POST['place'];
     $id_user = $_POST['id_user'];
 
+    // Si déja repondu
     $sql_doublons = "SELECT * FROM response_parent WHERE jour_event='$jour_event' AND id_username='$id_username'";
     $res_doublons = $db->query($sql_doublons);
 
@@ -295,6 +328,7 @@ function reponse()
         array_push($errors, "Réponse non défini");
     }
 
+    //  Si pas déja répondu alors :
     if ($res_doublons->rowCount() > 0) {
         array_push($errors, "Déja repondu");
     } else {
@@ -311,7 +345,7 @@ function reponse()
     }
 }
 
-
+//  SUPRESSION SAISON
 // function delete()
 // {
 //     global $db, $season;
@@ -325,21 +359,11 @@ function reponse()
 //     header('location: saisons.php');
 // }
 
+// CHANGEMENT MOT DE PASSE
+function updateMp ()
+{
+    global $db, $errors;
 
-// function statCount() {
-//     global $db;
 
-//     $jour_event = $_POST['jour_event'];
-//     $id_user = $_POST['id_user'];
-//     $reponse = $_POST['reponse'];
-//     $place = $_POST['place'];
 
-//         $sql = "SELECT COUNT(*) FROM response_parent WHERE reponse='oui' AND id_user='$id_user'";
-//         $sth = $db->prepare($sql);
-//         $sth->bindParam(':reponse', $reponse, PDO::PARAM_STR);
-//         $sth->bindParam(':place', $place, PDO::PARAM_STR);
-//         $sth->execute();
-//         $_SESSION['success']  = "New user successfully created!!";
-//         header('location: users_notifs.php');
-    
-// }
+}

@@ -36,33 +36,27 @@ if (!isLoggedIn()) {
                         <nav>
                             <ul>
                                 <li><a href="../index.php">HOME</a></li>
-                                <div class="underline"></div>
 
                                 <li><a href="users_notifs.php">NOTIFICATION</a></li>
-                                <div class="underline"></div>
 
                                 <li><a href="users_events.php">CALENDRIER</a></li>
-                                <div class="underline"> </div>
 
-                                <li><a href="users_saisons.php">SAISONS</a></li>
-                                <div class="underline"></div>
-
-                                <li><a href="users_stats.php">STATISTIQUES</a></li>
-                                <div class="underline"></div>
+                                <li><a href="users_param.php">PARAMÈTRES</a></li>
+                                
                             </ul>
                         </nav>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="infos_connec">
                     <?php if (isset($_SESSION['user'])) : ?>
                         <?php echo $_SESSION['user']['username']; ?>
                         (<?php echo ucfirst($_SESSION['user']['user_type']); ?>)
                     <?php endif ?>
-                    <img src="../assets/maquettes/bkc_dashboard.png" width="40px">
+                    <img src="../assets/maquettes/favicon_bkc.png" width="30px">
                     <div class="dropdown inline-block">
                         <img src="../assets/img/icons/arrow.png" width="20px">
                         <ul class="dropdown-menu absolute hidden">

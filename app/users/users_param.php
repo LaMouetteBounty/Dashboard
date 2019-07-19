@@ -15,7 +15,7 @@ if (!isLoggedIn()) {
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" type="image/png" href="../assets/maquettes/favicon_bkc.png">
-    <title>Inscription saison</title>
+    <title>Prochain match</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
 </head>
@@ -37,33 +37,27 @@ if (!isLoggedIn()) {
                             <ul>
 
                                 <li><a href="../index.php">HOME</a></li>
-                                <div class="underline"></div>
 
                                 <li><a href="users_notifs.php">NOTIFICATION</a></li>
-                                <div class="underline"></div>
 
                                 <li><a href="users_events.php">CALENDRIER</a></li>
-                                <div class="underline"> </div>
 
-                                <li><a href="users_saisons.php">SAISONS</a></li>
-                                <div class="underline"></div>
+                                <li><a href="users_param.php">PARAMÈTRES</a></li>
 
-                                <li><a href="users_stats.php">STATISTIQUES</a></li>
-                                <div class="underline"></div>
                             </ul>
                         </nav>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="infos_connec">
                     <?php if (isset($_SESSION['user'])) : ?>
                         <?php echo $_SESSION['user']['username']; ?>
                         (<?php echo ucfirst($_SESSION['user']['user_type']); ?>)
                     <?php endif ?>
-                    <img src="../assets/maquettes/bkc_dashboard.png" width="40px">
+                    <img src="../assets/maquettes/favicon_bkc.png" width="30px">
                     <div class="dropdown inline-block">
                         <img src="../assets/img/icons/arrow.png" width="20px">
                         <ul class="dropdown-menu absolute hidden">
@@ -75,9 +69,52 @@ if (!isLoggedIn()) {
 
             <!-- CONTENUE PAGE -->
             <div class=" row">
-                <div class="main_notifs offset-1 col-9">
-                    <h3>INSCRIPTION SAISONS</h3>
+                <div class="main_params offset-1 col-9">
+                    <h3>PARAMÈTRES</h3>
+                    <div class="info_error">
+                        <?php echo display_error(); ?>
+                    </div>
+                    <div class="content_params">
+                    
+                        <div class="info_user">
+                            <h4> INFORMATION UTILISATEUR </h4>
+                            <p> IDENTIFIANTS : <span>
+                            <?php if (isset($_SESSION['user'])) : ?>
+                        <?php echo $_SESSION['user']['username']; ?>
+                    <?php endif ?>
+                            </span></p>
+                            <p> EMAIL : <span>                          
+                                <?php if (isset($_SESSION['user'])) : ?>
+                        <?php echo $_SESSION['user']['email']; ?>
+                    <?php endif ?></span></p>
+                            <p> SAISON : <span>
+                            <?php if (isset($_SESSION['user'])) : ?>
+                        <?php echo $_SESSION['user']['date_saison']; ?>
+                    <?php endif ?>
 
+                            </span></p>
+                        </div>
+
+                        
+
+                        <div class="changeMp">
+                            <div class="input_mp">
+                                <h4>CHANGEMENT MOT DE PASSE</h4>
+                                <label>ANCIEN MOT DE PASSE</label>
+                                <input type="text" name="ancienMp" value="">
+                            </div>
+
+                            <div class="input_mp">
+                                <label>NOUVEAU MOT DE PASSE</label>
+                                <input type="text" name="newMp" value="">
+                            </div>
+                            <div class="input_mp">
+                                <label>CONFIRMATION NOUVEAU MOT DE PASSE</label>
+                                <input type="text" name="confNewMp" value="">
+                            </div>
+                            <button type="submit" class="btn" name="mp_btn">VALIDER</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,4 +1,117 @@
- 							
+ #####################################################################################################
+
+						MAIL HTML
+
+######################################################################################################
+
+
+
+
+        $message = "";
+        $message .= ' 
+        <header style="background-color:#e6e7e8">
+        <h1 style="font-family:anton; text-align: center; padding-top: 70px; font-size: 2.5em; margin:0;"> NOUVEAU MATCH </h1>
+        </header>
+        
+        <p style="font-family: lato; font-size: 1em; text-align: center; padding-top: 40px; "> 
+        Un nouveau match auras lieu ce week-end, <br> 
+        vous avez la possibilité de vous porter volontaire <br>
+        pour transporter les joueurs jusqu\'au lieu de rendez-vous. <br> 
+        Pour répondre à cette demande, merci de vous connecter <br>
+        sur votre compte à l\'adresse : <br>
+        <a class="lien_site" href="http://localhost:8080/login.php" style="font-family: lato; font-weight: 700; font-size: 1.5em; text-align: center; text-decoration: none; color: black; ">www.bkc.fr</a>
+        <br>
+        </p>
+        ';
+
+
+
+
+
+
+
+
+
+###############################################################################################################################
+###############################################################################################################################
+########################################################################################################
+
+
+                  
+SELECT COUNT(`id_user`) AS total ,`id_username` FROM `response_parent` GROUP BY `id_username`
+
+
+
+
+
+
+
+
+
+  PLACE NECESSAIRE : 
+SELECT * FROM planning ORDER BY `places_dispo` DESC
+###############################################################################################################################
+###############################################################################################################################
+###############################################################################################################################	
+
+
+<?php
+                            //déclaration requete sql
+                            $req1 = $db->query('SELECT * FROM saison');
+                            $rows = $req1->rowCount();
+
+                            //boucle pour recuperer plusieurs lignes
+                            if ($rows > 0) {
+                                while ($rows = $req1->fetch()) {
+                                    ?>
+                                    <option value="<?php echo $rows["date_saison"] ?>">
+                                        <?php echo $rows["date_saison"] ?>
+                                    </option>
+
+                                <?php
+                                }
+                            }
+                            ?>
+
+
+
+###############################################################################################################################
+###############################################################################################################################
+###############################################################################################################################					
+                        <?php
+                        $resultatDate = "";
+                        $theDate = $db->prepare("SELECT jour_event FROM response_parent GROUP BY jour_event DESC ");
+                        if ($theDate->execute(array())) {
+                            $resultatDate  = $theDate->fetch();
+                            $theDate = $resultatDate["jour_event"];
+                            echo $resultatDate[0];
+                        }
+                        
+                        $volontaire = "";
+                        $theVolontaire = $db->prepare("SELECT * FROM response_parent WHERE reponse='oui' AND jour_event=':jour_event' ");
+                        if ($theVolontaire->execute(array())) {
+                            $resultatDate  = $theVolontaire->fetch();
+                            var_dump($volontaire);
+                        }
+                        ?>
+
+
+###############################################################################################################################
+###############################################################################################################################
+###############################################################################################################################
+
+
+
+SELECT `jour_event` FROM response_parent GROUP BY `jour_event` DESC
+
+
+
+SELECT * FROM response_parent ORDER BY jour_event DESC;
+                        SELECT * FROM response_parent WHERE reponse='oui' AND jour_event=':' 
+###############################################################################################################################
+###############################################################################################################################
+###############################################################################################################################
+
 
 SELECT COUNT(`id_user`,`username`) FROM `response_parent` 
 INNER JOIN users ON response_parent.id_user=users.id
@@ -40,6 +153,37 @@ SELECT COUNT(`id_user`),`id_username` FROM `response_parent` GROUP BY `id_userna
 OK:
 SELECT COUNT(`id_user`) FROM `response_parent` GROUP BY `id_username`
 => recupere le total de trajet effectuer pour chaque utilisateur mais sans le nom
+
+###############################################################################################################################
+###############################################################################################################################
+###############################################################################################################################
+
+ <?php
+                    // $janvier = "";
+                    // $sqlJanvier = $db->prepare("SELECT COUNT(reponse='oui') FROM response_parent WHERE id_user='$choose_user'");
+                    // if ($sqlJanvier->execute(array())) {
+                    //     $janvier = $sqlJanvier->fetch();
+                    // }
+                    // $graph = 0;
+                    // for ($i = 0; $i < sizeof($result_graph); $i++) {
+                    // $graph += $result_graph[$i]["places_necessaires"];
+                    // echo ($result_graph[$i]['places_necessaires'] . ',');
+                    // } ?>
+###############################################################################################################################
+###############################################################################################################################
+###############################################################################################################################
+
+
+  <?php
+                    $req_user = $db->query('SELECT * FROM users');
+                    $row_user = $req_user->rowCount();
+                    
+                    if ($row_user > 0) {
+                        while ($row_user = $req_user->fetch()){
+                            ?>
+                        var ctx = document.querySelector('#myChart');
+                        var myChart = new Chart(ctx, {
+
 
 ###############################################################################################################################
 ###############################################################################################################################
@@ -196,4 +340,63 @@ TABLEAU PARTICIPATION/MOIS :
                                 }
                             }
                         });
+                    </script>
+
+###############################################################################################################################
+###############################################################################################################################
+###############################################################################################################################
+
+
+
+ <script>
+                        <?php
+                    $req_user = $db->query('SELECT * FROM users');
+                    $row_user = $req_user->rowCount();
+                    
+                    if ($row_user > 0) {
+                        while ($row_user = $req_user->fetch()){
+                            ?>
+                        var ctx = document.querySelector('#myChart');
+                        var myChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['<?php echo $row_user["username"];?>', '<?php echo $row_user["username"];?>', 'Mars', 'Avril', 'Mai', 'Juin'],
+                                datasets: [{
+                                    label: '',
+                                    data: [ 
+                                    
+                                    ],
+                                    backgroundColor: [
+                                        'rgb(242, 105, 33)',
+                                        'rgb(249, 164, 63)',
+                                        'rgb(252, 180, 20)',
+                                        'rgb(253, 187, 79)',
+                                        'rgb(242, 105, 33)',
+                                        'rgb(255, 213, 81)'
+                                    ],
+                                    borderColor: [
+                                        'rgb(88, 88, 91)',
+                                        'rgb(88, 88, 91)',
+                                        'rgb(88, 88, 91)',
+                                        'rgb(88, 88, 91)',
+                                        'rgb(88, 88, 91)',
+                                        'rgb(88, 88, 91)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                        <?php
+                        } 
+                    }
+                    ?>
                     </script>

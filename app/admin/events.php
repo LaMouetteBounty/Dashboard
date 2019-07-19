@@ -55,25 +55,20 @@ if (isset($_GET['logout'])) {
                                 <li><a href="/admin/saisons.php">SAISONS</a></li>
                                 <div class="underline"></div>
 
-                                <li><a href="/admin/stats.php">STATISTIQUES</a></li>
-                                <div class="underline"></div>
-
-                                <!-- <li><a href="/admin/events.php">PARAMÈTRES</a></li>
-                                <div class="underline"></div> -->
                             </ul>
                         </nav>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="infos_connec">
                     <?php if (isset($_SESSION['user'])) : ?>
                         <?php echo $_SESSION['user']['username']; ?>
                         (<?php echo ucfirst($_SESSION['user']['user_type']); ?>)
                     <?php endif ?>
-                    <img src="../assets/maquettes/bkc_dashboard.png" width="40px">
+                    <img src="../assets/maquettes/favicon_bkc.png" width="30px">
                     <div class="dropdown inline-block">
                         <img src="../assets/img/icons/arrow.png" width="20px">
                         <ul class="dropdown-menu absolute hidden">

@@ -31,7 +31,7 @@ if (isset($_GET['logout'])) {
 <body class="body">
     <div class="container-fluid main">
 
-        <div class="side_bar col-2">
+        <div class="side_bar_home col-2">
             <div class="container">
                 <div class="row">
                     <div class="profil">
@@ -41,7 +41,7 @@ if (isset($_GET['logout'])) {
                             <?php echo $_SESSION['user']['username']; ?>
                         <?php endif ?>
 
-                        <nav class="effect-4">
+                        <nav>
                             <ul>
 
                                 <li><a href="/admin/home.php">HOME</a></li>
@@ -56,9 +56,6 @@ if (isset($_GET['logout'])) {
                                 <li><a href="/admin/saisons.php">SAISONS</a></li>
                                 
 
-                                <li><a href="/admin/stats.php">STATISTIQUES</a></li>
-                               
-
                             </ul>
                         </nav>
                     </div>
@@ -72,7 +69,7 @@ if (isset($_GET['logout'])) {
                         <?php echo $_SESSION['user']['username']; ?>
                         (<?php echo ucfirst($_SESSION['user']['user_type']); ?>)
                     <?php endif ?>
-                    <img src="../assets/maquettes/bkc_dashboard.png" width="40px">
+                    <img src="../assets/maquettes/favicon_bkc.png" width="30px">
                     <div class="dropdown inline-block">
                         <img src="../assets/img/icons/arrow.png" width="20px">
                         <ul class="dropdown-menu absolute hidden">
@@ -89,7 +86,7 @@ if (isset($_GET['logout'])) {
                     <div class="contains_top">
                         <!-- NOMBRE D'INSCRIT SUR LA PLATEFORME -->
                         <div class="nb_inscrit">
-                            <h4> NOMBRE D'UTILISATEUR</h4>
+                            <h4> NOMBRE D'INSCRIT</h4>
                             <?php
                             $utilisateur = "";
                             $connect = $db->prepare("SELECT COUNT(*) FROM users WHERE user_type='user'");
@@ -134,7 +131,7 @@ if (isset($_GET['logout'])) {
                             <?php
 
                             $infoCompte = "";
-                            $connectCompteur = $db->prepare("SELECT COUNT(*) FROM response_parent WHERE reponse ='oui' ");
+                            $connectCompteur = $db->prepare("SELECT COUNT(*) FROM response_parent WHERE reponse ='oui'");
                             if ($connectCompteur->execute(array())) {
                                 $infoCompte  = $connectCompteur->fetch();
                                 echo $infoCompte[0];
@@ -319,7 +316,7 @@ if (isset($_GET['logout'])) {
                                     }
                                 }
                                 ?>
-                                <h4> TOTAL DES RÉPONSES </h4>
+                                <h4> MATCHS PAR VILLE </h4>
                                 <canvas id="myPieChartTwo"></canvas>
                                 <script>
                                     var lieuList = '<?php echo implode(',', $lieuList); ?>';

@@ -13,7 +13,7 @@ if (isset($_GET['logout'])) {
 }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="FR">
 
 <head>
     <meta charset="utf-8">
@@ -55,25 +55,20 @@ if (isset($_GET['logout'])) {
                                 <li><a href="/admin/saisons.php">SAISONS</a></li>
                                 <div class="underline"></div>
 
-                                <li><a href="/admin/stats.php">STATISTIQUES</a></li>
-                                <div class="underline"></div>
-
-                                <!-- <li><a href="/admin/events.php">PARAMÈTRES</a></li>
-                                <div class="underline"></div> -->
                             </ul>
                         </nav>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
-            <div class="infos_connec">
+                <div class="infos_connec">
                     <?php if (isset($_SESSION['user'])) : ?>
                         <?php echo $_SESSION['user']['username']; ?>
                         (<?php echo ucfirst($_SESSION['user']['user_type']); ?>)
                     <?php endif ?>
-                    <img src="../assets/maquettes/bkc_dashboard.png" width="40px">
+                    <img src="../assets/maquettes/favicon_bkc.png" width="30px">
                     <div class="dropdown inline-block">
                         <img src="../assets/img/icons/arrow.png" width="20px">
                         <ul class="dropdown-menu absolute hidden">
@@ -120,14 +115,12 @@ if (isset($_GET['logout'])) {
                             if ($stmtPlanning->execute(array())) {
                                 $rowPlanning  = $stmtPlanning->fetch()
                                 ?>
-                                                     
                                 <h4>DERNIER MATCH ENREGISTRÉ</h4>
-                                <p> <span>Date du macth :</span> <?php echo $rowPlanning [1]; ?> </p>
-                                <p> <span>Lieu du macth :</span> <?php echo $rowPlanning [2]; ?> </p>
-                                <p> <span>Nombre de joueurs :</span> <?php echo $rowPlanning [3]; ?> </p>
+                                <p> <span>Date du macth :</span> <?php echo $rowPlanning[1]; ?> </p>
+                                <p> <span>Lieu du macth :</span> <?php echo $rowPlanning[2]; ?> </p>
+                                <p> <span>Nombre de joueurs :</span> <?php echo $rowPlanning[3]; ?> </p>
                             <?php
                             }
-
                             ?>
                         </div>
                     </div>
